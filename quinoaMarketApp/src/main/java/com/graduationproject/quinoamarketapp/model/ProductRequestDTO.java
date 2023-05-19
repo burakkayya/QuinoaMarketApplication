@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class ProductRequestDTO {
+    private Long id;
     private Long farmerId;
     private ImageFile imageFile;
     private String info;
