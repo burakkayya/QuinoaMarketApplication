@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
-function App() {
+import 'bootstrap/dist/css/bootstrap.min.css';
+import LoginPage from './LoginPage';
+import CustomNavbar from './CustomNavbar';
+function HomePage() {
   const [loading, setLoading] = useState(true);
   const [imageData, setImageData] = useState(null);
 
@@ -11,7 +13,7 @@ function App() {
         const response = await axios.get('http://localhost:8080/api/images/13', {
           responseType: 'arraybuffer'
         });
-        
+
         const base64String = btoa(
           new Uint8Array(response.data)
             .reduce((data, byte) => data + String.fromCharCode(byte), '')
@@ -28,14 +30,11 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      {loading ? (
-        <p>Loading image...</p>
-      ) : (
-        <img src={imageData} alt="Example" />
-      )}
+    <div className="Home">
+      <CustomNavbar />
+      <LoginPage />
     </div>
   );
 }
 
-export default App;
+export default HomePage;
