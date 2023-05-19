@@ -1,6 +1,9 @@
 package com.graduationproject.quinoamarketapp.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "PORTFOLIO")
 public class Portfolio {

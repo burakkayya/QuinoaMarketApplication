@@ -6,6 +6,7 @@ import lombok.Data;
 import java.util.List;
 @Data
 public class FarmerRequestDTO {
+    private Long id;
     private List<Product> products;
     private String name;
     private String surname;
