@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Controller
 @RequestMapping("/api/farmer")
@@ -17,9 +19,14 @@ public class FarmerController {
     private final FarmerService farmerService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<FarmerResponseDTO> getById(@RequestParam Long id) throws Exception {
+    public ResponseEntity<FarmerResponseDTO> getById(@PathVariable Long id) throws Exception {
         FarmerResponseDTO farmerResponse = farmerService.getById(id);
         return ResponseEntity.ok(farmerResponse);
+    }
+    @GetMapping()
+    public ResponseEntity<List<FarmerResponseDTO>> getAll(){
+        List<FarmerResponseDTO> farmerResponseList = farmerService.getAll();
+        return ResponseEntity.ok(farmerResponseList);
     }
     @PutMapping("/update")
     public ResponseEntity<FarmerResponseDTO> update(@RequestBody FarmerRequestDTO farmerRequest) throws Exception {
@@ -28,12 +35,12 @@ public class FarmerController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<FarmerResponseDTO> add(@RequestBody FarmerRequestDTO farmerRequest) throws Exception {
+    public ResponseEntity<FarmerResponseDTO> add(@RequestBody FarmerRequestDTO farmerRequest){
         FarmerResponseDTO farmerResponse = farmerService.add(farmerRequest);
         return ResponseEntity.ok(farmerResponse);
     }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@RequestParam Long id) throws Exception {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) throws Exception {
         farmerService.delete(id);
         return ResponseEntity.ok("Farmer deleted succesfully!");
     }

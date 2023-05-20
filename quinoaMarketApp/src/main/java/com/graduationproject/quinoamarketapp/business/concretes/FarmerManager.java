@@ -7,6 +7,7 @@ import com.graduationproject.quinoamarketapp.model.FarmerResponseDTO;
 import com.graduationproject.quinoamarketapp.repository.FarmerRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,9 @@ public class FarmerManager implements FarmerService {
 
     @Override
     public List<FarmerResponseDTO> getAll() {
-        return null;
+        List<Farmer> farmers = farmerRepository.findAll();
+        List<FarmerResponseDTO> farmerResponseList = modelMapper.map(farmers, new TypeToken<List<FarmerResponseDTO>>() {}.getType());
+        return farmerResponseList;
     }
 
     @Override
@@ -46,6 +49,7 @@ public class FarmerManager implements FarmerService {
         if(farmer == null){
             throw new Exception("Farmer not found with id "+ farmerRequest.getId());
         }
+        farmer = modelMapper.map(farmerRequest,Farmer.class);
         farmerRepository.save(farmer);
         FarmerResponseDTO farmerResponse = modelMapper.map(farmer,FarmerResponseDTO.class);
         return farmerResponse;
