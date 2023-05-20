@@ -64,7 +64,7 @@ public class FarmerManager implements FarmerService {
         if(farmer == null){
             throw new Exception("Farmer not found with id "+ id);
         }
-        farmer.setProfilePhoto(imageService.add(profilePhoto));
+        //farmer.setProfilePhoto(imageService.add(profilePhoto));
         farmerRepository.save(farmer);
         FarmerResponseDTO farmerResponse = modelMapper.map(farmer,FarmerResponseDTO.class);
         return farmerResponse;
