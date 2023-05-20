@@ -1,6 +1,7 @@
 package com.graduationproject.quinoamarketapp.business.concretes;
 
 import com.graduationproject.quinoamarketapp.business.abstracts.FarmerService;
+import com.graduationproject.quinoamarketapp.business.abstracts.ImageService;
 import com.graduationproject.quinoamarketapp.entity.Farmer;
 import com.graduationproject.quinoamarketapp.model.FarmerRequestDTO;
 import com.graduationproject.quinoamarketapp.model.FarmerResponseDTO;
@@ -10,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,6 +20,8 @@ import java.util.List;
 public class FarmerManager implements FarmerService {
     @Autowired
     private FarmerRepository farmerRepository;
+    @Autowired
+    private ImageService imageService;
     private ModelMapper modelMapper;
     @Override
     public FarmerResponseDTO getById(Long id) throws Exception {
@@ -50,6 +54,17 @@ public class FarmerManager implements FarmerService {
             throw new Exception("Farmer not found with id "+ farmerRequest.getId());
         }
         farmer = modelMapper.map(farmerRequest,Farmer.class);
+        farmerRepository.save(farmer);
+        FarmerResponseDTO farmerResponse = modelMapper.map(farmer,FarmerResponseDTO.class);
+        return farmerResponse;
+    }
+
+    public FarmerResponseDTO updateProfilePhoto(Long id, MultipartFile profilePhoto) throws Exception{
+        Farmer farmer = farmerRepository.findById(id).orElse(null);
+        if(farmer == null){
+            throw new Exception("Farmer not found with id "+ id);
+        }
+        farmer.setProfilePhoto(imageService.add(profilePhoto));
         farmerRepository.save(farmer);
         FarmerResponseDTO farmerResponse = modelMapper.map(farmer,FarmerResponseDTO.class);
         return farmerResponse;

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -31,6 +32,12 @@ public class FarmerController {
     @PutMapping("/update")
     public ResponseEntity<FarmerResponseDTO> update(@RequestBody FarmerRequestDTO farmerRequest) throws Exception {
         FarmerResponseDTO farmerResponse = farmerService.update(farmerRequest);
+        return ResponseEntity.ok(farmerResponse);
+    }
+
+    @PutMapping("/{id}/update-profile-photo")
+    public ResponseEntity<FarmerResponseDTO> updateFarmerProfilePhoto(@PathVariable Long id, @RequestParam("file") MultipartFile profilePhoto) throws Exception {
+        FarmerResponseDTO farmerResponse = farmerService.updateProfilePhoto(id, profilePhoto);
         return ResponseEntity.ok(farmerResponse);
     }
 
