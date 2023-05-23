@@ -1,13 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import App from './App';
 import HomePage from './HomePage';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import PopularSellers from './PopularSellers';
+import Profile from './Profile';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <HomePage/>
+    <Router>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/Home" element={<HomePage />} />
+        <Route path="/Populars" element={<PopularSellers />} />
+        <Route path="/Profile" element={<Profile />} />
+
+
+      </Routes>
+    </Router>
   </React.StrictMode>
 );
 

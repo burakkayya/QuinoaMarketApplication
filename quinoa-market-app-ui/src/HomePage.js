@@ -1,40 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import LoginPage from './LoginPage';
-import CustomNavbar from './CustomNavbar';
+import React from "react";
+import CustomNavbar from "./CustomNavbar";
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import './HomePage.css'; // Stil dosyasını import edin
 function HomePage() {
-  const [loading, setLoading] = useState(true);
-  const [imageData, setImageData] = useState(null);
-
-  useEffect(() => {
-    const fetchImage = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/api/images/13', {
-          responseType: 'arraybuffer'
-        });
-
-        const base64String = btoa(
-          new Uint8Array(response.data)
-            .reduce((data, byte) => data + String.fromCharCode(byte), '')
-        );
-        const imageUrl = `data:image/jpeg;base64,${base64String}`;
-        setImageData(imageUrl);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-        setLoading(false);
-      }
-    };
-    fetchImage();
-  }, []);
-
-  return (
-    <div className="Home">
-      <CustomNavbar />
-      <LoginPage />
-    </div>
-  );
+    return (
+        <>
+            <CustomNavbar />
+            <Row xs={1} md={3} className="g-3">
+                {Array.from({ length: 6 }).map((_, idx) => (
+                    <Col >
+                        <Card>
+                            <Card.Img variant="top" src="./images/iniasanta.jpg" />
+                            <Card.Body>
+                                <Card.Title>Card title</Card.Title>
+                                <Card.Text>
+                                    This is a longer card with supporting text below as a natural
+                                    lead-in to additional content. This content is a little bit
+                                    longer.
+                                </Card.Text>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                ))}
+            </Row>        </>
+    );
 }
+export default HomePage
 
-export default HomePage;
+
+
