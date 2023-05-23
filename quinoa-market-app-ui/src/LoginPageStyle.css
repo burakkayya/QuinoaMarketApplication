@@ -1,20 +1,26 @@
+#loginCollaps{
+    background-color: #d0cccc60;
+
+}
 .login-page {
-    border: 1px solid #ddd;
-    border-radius: 50%;
-    padding: 20px;
+    border: 1px solid #a9a8a8;
+    border-radius: 48%;
     padding: 20px;
     display: inline-block;
-    width: 500px;
-    height: 500px;
+    width: 550px;
+    height: 480px;
     margin-left: 20px;
     margin-top: 3px;
     background-color: rgba(197, 192, 186, 0.7);
     color: white;
-
+    position: relative;
+    
 }
+
 .form-control{
     padding: 8px;
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 .customSpan{
     margin-left:50px;
@@ -67,15 +73,16 @@
 }
 #SeedHeader,
 #MarketHeader {
-  font-family: 'Neucha', cursive;
+  font-family: 'Lilita One', cursive;
 }
+
 #SeedHeader{
     margin-left: 20%;
     font-weight: 800;
     font-size:40px;
     margin-bottom: 0px;
     font-style: italic;
-    letter-spacing: 5px; /* Harfler arasına 2 piksel boşluk ekler */
+    letter-spacing: 2px; /* Harfler arasına 2 piksel boşluk ekler */
     color: rgb(78, 71, 61);
 
 }
@@ -83,31 +90,72 @@
     margin-left: 35%;
     font-style: italic;
     font-size:40px;
-    letter-spacing: 5px; /* Harfler arasına 2 piksel boşluk ekler */
+    letter-spacing: 2px; /* Harfler arasına 2 piksel boşluk ekler */
     font-weight: 800;
     margin-top: 0px;
     color: rgb(78, 71, 61);
 
 }
 #slogan{
-    font-family: 'Comfortaa';
+    font-family: 'Roboto Mono';
     padding-top: 5px; 
     text-align: center;
     color: rgb(78, 71, 61);
 
 }
 .login-page .btn {
- width: 70%;
+ width: 100%;
  text-align: center;
  margin-left: auto;
  margin-right: auto;
  padding: 2%;
- margin-bottom: 1px;
- margin-top: 10px;
+ margin-bottom: 5px;
+ margin-top: 5px;
 }
+
 .continueButton {
     background: none;
     border: none;
     color: rgb(78, 71, 61);
-    margin-top: 1px;
 }
+
+
+@media screen and (max-width: 1200px)  {
+
+    .login-page {
+        border-radius: 0;
+        height: 80vh;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0%;
+    }
+    #SeedHeader,
+    #MarketHeader {
+        margin-left: 0;
+        text-align: center;
+        font-size: 40px;
+    }
+    #loginCollaps{
+        background-image: url('/images/quinoa.avif');
+        background-repeat: no-repeat;
+        background-size: cover;
+       }
+    #slogan {
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    .login-page .btn {
+        width: 100%;
+    }
+    .right-image
+    {
+       display: none;
+      
+
+    }
+
+}
+  

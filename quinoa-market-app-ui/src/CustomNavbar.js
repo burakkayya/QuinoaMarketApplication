@@ -10,6 +10,7 @@ const CustomNavbar = () => {
         fontWeight: 'bold',
         color: '#6E592F',
         height: '120px',
+        zIndex: 2,
     };
 
     const linkStyle = {
@@ -20,20 +21,25 @@ const CustomNavbar = () => {
         borderRadius: '5px',
         width: "100%",
         textAlign: 'center',
+        color: "#5E5B3E",
     };
 
     const dropdownLinkStyle = {
         ...linkStyle,
         backgroundColor: '#FFF',
+        color: "black",
         transition: 'background-color 0.3s',
     };
 
     const handleDropdownHover = (event) => {
-        event.target.style.backgroundColor = '#FFF';
+        event.target.style.backgroundColor = '#78D46A';
+        event.target.style.color = "white"
     };
 
     const handleDropdownLeave = (event) => {
         event.target.style.backgroundColor = '#F2EEEB';
+        event.target.style.color = "#5E5B3E"
+
     };
 
     return (
@@ -46,7 +52,7 @@ const CustomNavbar = () => {
                 <Navbar.Brand href="#home">
                     <img
                         src="/images/logo.png"
-                        width="150"
+                        width="160"
                         height="110"
                         className="d-inline-block align-top"
                         alt="Logo"
