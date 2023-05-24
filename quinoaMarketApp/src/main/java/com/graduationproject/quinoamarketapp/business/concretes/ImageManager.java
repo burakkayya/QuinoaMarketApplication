@@ -4,6 +4,7 @@ import com.graduationproject.quinoamarketapp.business.abstracts.ImageService;
 import com.graduationproject.quinoamarketapp.dto.responses.ImageFileResponseDTO;
 import com.graduationproject.quinoamarketapp.repository.ImageRepository;
 import com.graduationproject.quinoamarketapp.entity.ImageFile;
+import com.graduationproject.quinoamarketapp.util.ImageUtils;
 import lombok.AllArgsConstructor;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
@@ -34,12 +36,14 @@ public class ImageManager implements ImageService {
         ImageFile image= imageRepository.save(ImageFile.builder()
                         .name(file.getOriginalFilename())
                         .type(file.getContentType())
-                        .imageData(file.getBytes()).build());
+                        .imageData(ImageUtils.compressImage(file.getBytes())).build());
 
         if(image != null){
             ImageFile dbImageFile = imageRepository.findById(image.getId()).orElseThrow();
+            dbImageFile.setImageData(ImageUtils.decompressImage(dbImageFile.getImageData()));
             ImageFileResponseDTO response = mapper.map(dbImageFile, ImageFileResponseDTO.class);
             return  response;
+
         }
         return null;
 
@@ -48,15 +52,20 @@ public class ImageManager implements ImageService {
     @Override
     public ImageFileResponseDTO getById(Long id) {
         ImageFile dbImageFile = imageRepository.findById(id).orElseThrow();
+        dbImageFile.setImageData(ImageUtils.decompressImage(dbImageFile.getImageData()));
         ImageFileResponseDTO response = mapper.map(dbImageFile, ImageFileResponseDTO.class);
         return  response;
-        //return ImageUtils.decompressImage(dbImageFile.get().getImageData());
     }
 
     @Override
     public List<ImageFileResponseDTO> getAll() {
-        List<ImageFile> brands = imageRepository.findAll();
-        List<ImageFileResponseDTO> responses = brands
+        List<ImageFile> imageFiles = imageRepository.findAll();
+        List<ImageFile> imageFilesTemp=new ArrayList<>();
+        for(ImageFile dbImageFile : imageFiles) {
+            dbImageFile.setImageData(ImageUtils.decompressImage(dbImageFile.getImageData()));
+            imageFilesTemp.add(dbImageFile);
+        }
+        List<ImageFileResponseDTO> responses = imageFilesTemp
                 .stream()
                 .map(brand -> mapper.map(brand, ImageFileResponseDTO.class))
                 .toList();
@@ -92,7 +101,7 @@ public class ImageManager implements ImageService {
         ImageFile image=new ImageFile();
         image.setName(file.getOriginalFilename());
         image.setType(file.getContentType());
-        image.setImageData(imageBytes);
+        image.setImageData(ImageUtils.compressImage(imageBytes));
         imageRepository.save(image);
 
         // Return the prediction
