@@ -1,11 +1,11 @@
 package com.graduationproject.quinoamarketapp.business.concretes;
 
 import com.graduationproject.quinoamarketapp.business.abstracts.FarmerService;
-import com.graduationproject.quinoamarketapp.business.abstracts.ImageService;
 import com.graduationproject.quinoamarketapp.entity.Farmer;
 import com.graduationproject.quinoamarketapp.model.FarmerRequestDTO;
 import com.graduationproject.quinoamarketapp.model.FarmerResponseDTO;
 import com.graduationproject.quinoamarketapp.repository.FarmerRepository;
+import com.graduationproject.quinoamarketapp.util.ImageUtils;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -20,8 +20,6 @@ import java.util.List;
 public class FarmerManager implements FarmerService {
     @Autowired
     private FarmerRepository farmerRepository;
-    @Autowired
-    private ImageService imageService;
     private ModelMapper modelMapper;
     @Override
     public FarmerResponseDTO getById(Long id) throws Exception {
@@ -64,7 +62,7 @@ public class FarmerManager implements FarmerService {
         if(farmer == null){
             throw new Exception("Farmer not found with id "+ id);
         }
-        //farmer.setProfilePhoto(imageService.add(profilePhoto));
+        farmer.setProfilePhoto(ImageUtils.compressImage(profilePhoto.getBytes()));
         farmerRepository.save(farmer);
         FarmerResponseDTO farmerResponse = modelMapper.map(farmer,FarmerResponseDTO.class);
         return farmerResponse;
