@@ -1,0 +1,54 @@
+.label{
+    font-weight: bold;
+}
+p{
+    margin-bottom: 2px;
+}
+.edit-icon {
+    color: gray;
+  }
+.container-fluid{
+padding-left: 80px;
+padding-right: 80px;
+margin-top: 3vh;
+}
+.form-check-input:checked {
+    background-color: green;
+    border-color:green;
+}
+.form-check-input {
+    width: 1.4em;
+    height: 1.4em;
+    margin-right: 6px;
+}
+.form-check-label {
+    font-size: 15px;
+    align-items: center;
+}
+.form-check{
+    align-items: center;
+    justify-content: center;
+}
+
+.btn {
+    color: var(--bs-btn-hover-color);
+    background-color: #d87911;
+    border-color: #d87911;
+    text-decoration: none;
+    width: 25%;
+    margin-right: auto;
+    margin-top: 25px;
+    padding: 5px;
+    align-items: center;
+    text-align: center;
+}
+.btn:hover {
+    color: var(--bs-btn-hover-color);
+    background-color: white;
+    color: #d87911;
+    border-color: #d87911;
+
+}
+a{
+    text-decoration: none;
+}

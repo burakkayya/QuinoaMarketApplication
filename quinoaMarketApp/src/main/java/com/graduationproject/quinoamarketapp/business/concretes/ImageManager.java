@@ -1,6 +1,7 @@
 package com.graduationproject.quinoamarketapp.business.concretes;
 
 import com.graduationproject.quinoamarketapp.business.abstracts.ImageService;
+import com.graduationproject.quinoamarketapp.dto.responses.ImageFileResponseDTO;
 import com.graduationproject.quinoamarketapp.repository.ImageRepository;
 import com.graduationproject.quinoamarketapp.entity.ImageFile;
 import com.graduationproject.quinoamarketapp.util.ImageUtils;
@@ -13,6 +14,7 @@ import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,15 +22,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @Service
 public class ImageManager implements ImageService {
-    private ImageRepository imageRepository;
+    private final ImageRepository imageRepository;
+    private final ModelMapper mapper;
 
     @Override
-    public byte[] add(MultipartFile file) throws IOException{
+    public ImageFileResponseDTO add(MultipartFile file) throws IOException{
         byte[] imageBytes = file.getBytes();
 
         ImageFile image= imageRepository.save(ImageFile.builder()
@@ -37,42 +39,46 @@ public class ImageManager implements ImageService {
                         .imageData(ImageUtils.compressImage(file.getBytes())).build());
 
         if(image != null){
-            Optional<ImageFile> dbImageFile = imageRepository.findById(image.getId());
-            return  dbImageFile.get().getImageData();
-            //return ImageUtils.decompressImage(dbImageFile.get().getImageData());
+            ImageFile dbImageFile = imageRepository.findById(image.getId()).orElseThrow();
+            dbImageFile.setImageData(ImageUtils.decompressImage(dbImageFile.getImageData()));
+            ImageFileResponseDTO response = mapper.map(dbImageFile, ImageFileResponseDTO.class);
+            return  response;
+
         }
         return null;
 
     }
 
     @Override
-    public byte[] getById(Long id) {
-        Optional<ImageFile> dbImageFile = imageRepository.findById(id);
-        return  dbImageFile.get().getImageData();
-        //return ImageUtils.decompressImage(dbImageFile.get().getImageData());
+    public ImageFileResponseDTO getById(Long id) {
+        ImageFile dbImageFile = imageRepository.findById(id).orElseThrow();
+        dbImageFile.setImageData(ImageUtils.decompressImage(dbImageFile.getImageData()));
+        ImageFileResponseDTO response = mapper.map(dbImageFile, ImageFileResponseDTO.class);
+        return  response;
     }
 
     @Override
-    public byte[] getByName(String name) {
-        Optional<ImageFile> dbImageFile = imageRepository.findByName(name);
-        return  dbImageFile.get().getImageData();
-        //return ImageUtils.decompressImage(dbImageFile.get().getImageData());
-    }
-
-    @Override
-    public List<byte[]> getAll() {
-        List<byte[]> result= new ArrayList<>();
-        for(ImageFile dbImageFile : imageRepository.findAll()) {
-            byte[] bytes= dbImageFile.getImageData();//ImageUtils.decompressImage(dbImageFile.getImageData());
-            result.add(bytes);
+    public List<ImageFileResponseDTO> getAll() {
+        List<ImageFile> imageFiles = imageRepository.findAll();
+        List<ImageFile> imageFilesTemp=new ArrayList<>();
+        for(ImageFile dbImageFile : imageFiles) {
+            dbImageFile.setImageData(ImageUtils.decompressImage(dbImageFile.getImageData()));
+            imageFilesTemp.add(dbImageFile);
         }
-        return result;
+        List<ImageFileResponseDTO> responses = imageFilesTemp
+                .stream()
+                .map(brand -> mapper.map(brand, ImageFileResponseDTO.class))
+                .toList();
+        return responses;
+    }
+
+    @Override
+    public void delete(Long id) {
+        imageRepository.deleteById(id);
     }
 
     @Override
     public String predict(MultipartFile file) throws IOException {
-
-
         // Convert MultipartFile to byte array
         byte[] imageBytes = file.getBytes();
 
@@ -95,7 +101,7 @@ public class ImageManager implements ImageService {
         ImageFile image=new ImageFile();
         image.setName(file.getOriginalFilename());
         image.setType(file.getContentType());
-        image.setImageData(imageBytes);
+        image.setImageData(ImageUtils.compressImage(imageBytes));
         imageRepository.save(image);
 
         // Return the prediction
