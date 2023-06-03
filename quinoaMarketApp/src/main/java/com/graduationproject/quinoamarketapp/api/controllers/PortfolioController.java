@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/portfolio")
+@RequestMapping("/api/portfolios")
 public class PortfolioController {
     @Autowired
     private final PortfolioService portfolioService;

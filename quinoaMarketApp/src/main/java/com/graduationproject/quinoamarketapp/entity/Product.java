@@ -14,9 +14,9 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "farmerId")
     private Farmer farmer;
-    @OneToOne
-    @JoinColumn(name = "imageFile")
-    private ImageFile imageFile;
+    @Lob
+    @Column(name = "productPhoto",length = 1000)
+    private byte[] productPhoto;
     private String predictionName;
     private String info;
     private Long stock;

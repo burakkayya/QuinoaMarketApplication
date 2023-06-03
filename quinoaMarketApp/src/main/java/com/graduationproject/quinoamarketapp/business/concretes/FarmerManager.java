@@ -41,8 +41,7 @@ public class FarmerManager implements FarmerService {
     public FarmerResponseDTO add(FarmerRequestDTO farmerRequest) {
         Farmer farmer = modelMapper.map(farmerRequest,Farmer.class);
         farmerRepository.save(farmer);
-        FarmerResponseDTO farmerResponse = modelMapper.map(farmer,FarmerResponseDTO.class);
-        return farmerResponse;
+        return modelMapper.map(farmer,FarmerResponseDTO.class);
     }
 
     @Override
@@ -53,8 +52,7 @@ public class FarmerManager implements FarmerService {
         }
         farmer = modelMapper.map(farmerRequest,Farmer.class);
         farmerRepository.save(farmer);
-        FarmerResponseDTO farmerResponse = modelMapper.map(farmer,FarmerResponseDTO.class);
-        return farmerResponse;
+        return modelMapper.map(farmer,FarmerResponseDTO.class);
     }
 
     public FarmerResponseDTO updateProfilePhoto(Long id, MultipartFile profilePhoto) throws Exception{
@@ -64,8 +62,7 @@ public class FarmerManager implements FarmerService {
         }
         farmer.setProfilePhoto(ImageUtils.compressImage(profilePhoto.getBytes()));
         farmerRepository.save(farmer);
-        FarmerResponseDTO farmerResponse = modelMapper.map(farmer,FarmerResponseDTO.class);
-        return farmerResponse;
+        return modelMapper.map(farmer,FarmerResponseDTO.class);
     }
 
     @Override

@@ -6,7 +6,7 @@ import lombok.Data;
 public class ProductRequestDTO {
     private Long id;
     private Long farmerId;
-    private ImageFile imageFile;
+    private byte[] productPhoto;
     private String info;
     private Long stock;
 }
