@@ -14,37 +14,32 @@ import java.util.List;
 
 @AllArgsConstructor
 @Controller
-@RequestMapping("/api/farmer")
+@RequestMapping("/api/farmers")
 public class FarmerController {
     @Autowired
     private final FarmerService farmerService;
 
     @GetMapping("/{id}")
     public ResponseEntity<FarmerResponseDTO> getById(@PathVariable Long id) throws Exception {
-        FarmerResponseDTO farmerResponse = farmerService.getById(id);
-        return ResponseEntity.ok(farmerResponse);
+        return ResponseEntity.ok(farmerService.getById(id));
     }
     @GetMapping()
     public ResponseEntity<List<FarmerResponseDTO>> getAll(){
-        List<FarmerResponseDTO> farmerResponseList = farmerService.getAll();
-        return ResponseEntity.ok(farmerResponseList);
+        return ResponseEntity.ok(farmerService.getAll());
     }
     @PutMapping("/update")
     public ResponseEntity<FarmerResponseDTO> update(@RequestBody FarmerRequestDTO farmerRequest) throws Exception {
-        FarmerResponseDTO farmerResponse = farmerService.update(farmerRequest);
-        return ResponseEntity.ok(farmerResponse);
+        return ResponseEntity.ok(farmerService.update(farmerRequest));
     }
 
     @PutMapping("/{id}/update-profile-photo")
     public ResponseEntity<FarmerResponseDTO> updateFarmerProfilePhoto(@PathVariable Long id, @RequestParam("file") MultipartFile profilePhoto) throws Exception {
-        FarmerResponseDTO farmerResponse = farmerService.updateProfilePhoto(id, profilePhoto);
-        return ResponseEntity.ok(farmerResponse);
+        return ResponseEntity.ok(farmerService.updateProfilePhoto(id, profilePhoto));
     }
 
     @PostMapping("/add")
     public ResponseEntity<FarmerResponseDTO> add(@RequestBody FarmerRequestDTO farmerRequest){
-        FarmerResponseDTO farmerResponse = farmerService.add(farmerRequest);
-        return ResponseEntity.ok(farmerResponse);
+        return ResponseEntity.ok(farmerService.add(farmerRequest));
     }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) throws Exception {
