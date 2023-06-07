@@ -22,7 +22,6 @@ public class Farmer {
     private String password;
     private String email;
     private String phoneNo;
-    private String address;
     @Lob
     @Column(name = "profilePhoto",length = 1000)
     private byte[] profilePhoto;

@@ -13,6 +13,5 @@ public class FarmerResponseDTO {
     private String surname;
     private String email;
     private String phoneNo;
-    private String address;
     private byte[] profilePhoto;
 }
