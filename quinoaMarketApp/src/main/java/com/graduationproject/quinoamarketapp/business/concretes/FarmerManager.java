@@ -4,6 +4,7 @@ import com.graduationproject.quinoamarketapp.business.abstracts.FarmerService;
 import com.graduationproject.quinoamarketapp.entity.Farmer;
 import com.graduationproject.quinoamarketapp.model.FarmerRequestDTO;
 import com.graduationproject.quinoamarketapp.model.FarmerResponseDTO;
+import com.graduationproject.quinoamarketapp.model.LoginRequestDTO;
 import com.graduationproject.quinoamarketapp.repository.FarmerRepository;
 import com.graduationproject.quinoamarketapp.util.ImageUtils;
 import lombok.AllArgsConstructor;
@@ -72,5 +73,15 @@ public class FarmerManager implements FarmerService {
             throw new Exception("Farmer not found with id "+ id);
         }
         farmerRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean existsByEmailAndPassword(LoginRequestDTO request) {
+        return farmerRepository.existsByEmailAndPassword(request.getEmail(), request.getPassword());
+    }
+
+    @Override
+    public FarmerResponseDTO findByEmail(String email) {
+        return modelMapper.map(farmerRepository.findByEmail(email), FarmerResponseDTO.class);
     }
 }
