@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/public/sign-up")
+@RequestMapping("/api/sign-up")
 public class SignUpController {
     @Autowired
     private final SignUpService signUpService;
