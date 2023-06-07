@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "FARMER")
+@Table(name = "farmers")
 public class Farmer {
 
     @Id
@@ -17,10 +17,15 @@ public class Farmer {
     private Long id;
     @OneToMany(mappedBy = "farmer")
     private List<Product> products;
+    @Column(name = "name", nullable = false)
     private String name;
+    @Column(name = "surname", nullable = false)
     private String surname;
+    @Column(name = "password", nullable = false)
     private String password;
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
+    @Column(name = "phoneNo", unique = true, nullable = false)
     private String phoneNo;
     @Lob
     @Column(name = "profilePhoto",length = 1000)

@@ -84,4 +84,14 @@ public class FarmerManager implements FarmerService {
     public FarmerResponseDTO findByEmail(String email) {
         return modelMapper.map(farmerRepository.findByEmail(email), FarmerResponseDTO.class);
     }
+
+    @Override
+    public List<FarmerResponseDTO> getTopFarmersWithMostProducts() {
+        List<Farmer> farmers = farmerRepository.findTopFarmersWithMostProducts();
+        List<FarmerResponseDTO> response = farmers
+                .stream()
+                .map(farmer -> modelMapper.map(farmer, FarmerResponseDTO.class))
+                .toList();
+        return response;
+    }
 }
