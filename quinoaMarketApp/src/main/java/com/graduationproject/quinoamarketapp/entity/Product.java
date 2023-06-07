@@ -1,5 +1,6 @@
 package com.graduationproject.quinoamarketapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -11,6 +12,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "farmerId")
     private Farmer farmer;
