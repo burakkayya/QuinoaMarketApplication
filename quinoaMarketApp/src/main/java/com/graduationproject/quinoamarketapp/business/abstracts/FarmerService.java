@@ -16,4 +16,5 @@ public interface FarmerService {
     void delete(Long id) throws Exception;
     boolean existsByEmailAndPassword(LoginRequestDTO request);
     FarmerResponseDTO findByEmail(String email);
+    List<FarmerResponseDTO> getTopFarmersWithMostProducts();
 }
