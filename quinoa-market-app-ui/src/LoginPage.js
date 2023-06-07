@@ -11,13 +11,18 @@ const LoginPage = () => {
         navigate(path);
     }
 
+     function login(){
+
+     }
+
     return (
         <>
             <CustomNavbar />
-            <div id='loginCollaps' className='d-flex justify-content-evenly'>
+            <div className='body'> 
+            <div id='loginCollaps' className='d-flex justify-content-evenly '>
                 <div className="login-page">
                     <div className="login-page-box">
-                        <Container className="h-100">
+                        <Container className="100vh">
                             <Row className="justify-content-center align-items-center h-100">
                                 <Col xs={12} sm={8} md={6} lg={8}>
                                     <Form>
@@ -53,8 +58,8 @@ const LoginPage = () => {
                 <div className='right-image'>
                     <img
                         src="/images/quinoa.avif"
-                        width="650"
-                        height="400"
+                        width="750"
+                        height="500"
                         className="d-inline-block align-top"
                         alt="Quinoa"
                         style={{
@@ -67,6 +72,7 @@ const LoginPage = () => {
                         }}
                     />
                 </div>
+            </div>
             </div>
         </>
 
