@@ -15,18 +15,16 @@ const CustomNavbar = () => {
     };
 
     const linkStyle = {
-        display: 'inline-block',
+        display: 'block',
         margin: 'auto',
         backgroundColor: '#F2EEEB',
         padding: '10px 15px',
         borderRadius: '5px',
+        width: '100%',
         textAlign: 'center',
         color: '#5E5B3E',
         textDecoration: 'none',
         transition: 'background-color 0.3s, color 0.3s',
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
     };
 
     const activeLinkStyle = {
@@ -65,8 +63,6 @@ const CustomNavbar = () => {
             event.target.style.color = '#5E5B3E';
         }
     };
-
-    const isHomePage = activeLink === '/';
 
     return (
         <>
@@ -116,35 +112,33 @@ const CustomNavbar = () => {
                             Popular Sellers
                         </Link>
                         <Link
-                            to="/about"
+                            to="/Profile"
                             style={
-                                activeLink === '/about'
+                                activeLink === '/Profile'
                                     ? { ...linkStyle, ...activeLinkStyle }
                                     : linkStyle
                             }
                             onMouseEnter={handleLinkHover}
                             onMouseLeave={handleLinkLeave}
-                            onClick={() => handleLinkClick('/about')}
-                            data-isactive={activeLink === '/about'}
+                            onClick={() => handleLinkClick('/Profile')}
+                            data-isactive={activeLink === '/Profile'}
                         >
-                            About
+                            Profile
                         </Link>
-                        {!isHomePage && (
-                            <Link
-                                to="/"
-                                style={
-                                    activeLink === '/'
-                                        ? { ...linkStyle, ...activeLinkStyle }
-                                        : linkStyle
-                                }
-                                onMouseEnter={handleLinkHover}
-                                onMouseLeave={handleLinkLeave}
-                                onClick={() => handleLinkClick('/')}
-                                data-isactive={activeLink === '/'}
-                            >
-                                Logout
-                            </Link>
-                        )}
+                        <Link
+                            to="/"
+                            style={
+                                activeLink === '/'
+                                    ? { ...linkStyle, ...activeLinkStyle }
+                                    : linkStyle
+                            }
+                            onMouseEnter={handleLinkHover}
+                            onMouseLeave={handleLinkLeave}
+                            onClick={() => handleLinkClick('/')}
+                            data-isactive={activeLink === '/'}
+                        >
+                            Logout
+                        </Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

@@ -3,6 +3,11 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LoginPage from './LoginPage';
 import CustomNavbar from './CustomNavbar';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import HomePage from './HomePage';
+import PopularSellers from './PopularSellers';
+import Profile from './Profile';
+import About from './About';
 function App() {
   const [loading, setLoading] = useState(true);
   const [imageData, setImageData] = useState(null);
@@ -31,7 +36,19 @@ function App() {
 
   return (
     <div className="Home">
-      <LoginPage />
+      <React.StrictMode>
+        <Router>
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/Home" element={<HomePage />} />
+            <Route path="/Populars" element={<PopularSellers />} />
+            <Route path="/Profile" element={<Profile />} />
+            <Route path="/About" element={<About />} />
+
+          </Routes>
+        </Router>
+      </React.StrictMode>
+
     </div>
   );
 }

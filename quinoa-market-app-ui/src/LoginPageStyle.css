@@ -48,12 +48,6 @@
 }
 
 
-.continueButton:hover {
-    background:none;
-    color: whitesmoke;
-    border-color: rgb(41, 37, 31);
-}
-
 .divider {
     display: flex;
     align-items: center;
@@ -113,11 +107,7 @@
  margin-top: 5px;
 }
 
-.continueButton {
-    background: none;
-    border: none;
-    color: rgb(78, 71, 61);
-}
+
 
 
 @media screen and (max-width: 1200px)  {
@@ -157,5 +147,15 @@
 
     }
 
+    
 }
-  
+#continueButton {
+    border: none;
+    color:whitesmoke;
+    width: 70%;
+}
+
+    #continueButton:hover {
+        color: rgb(78, 71, 61);
+        border-color: rgb(41, 37, 31);
+    }
