@@ -2,7 +2,15 @@ import React from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import './LoginPageStyle.css'; // Stil dosyasını import edin
 import CustomNavbar from './CustomNavbar';
+import { useNavigate } from 'react-router-dom';
+
 const LoginPage = () => {
+
+    const navigate = useNavigate();
+    function handleClick(path) {
+        navigate(path);
+    }
+
     return (
         <>
             <CustomNavbar />
@@ -32,7 +40,9 @@ const LoginPage = () => {
                                             <span className="divider-text">OR</span>
                                             <span className="divider-line"></span>
                                         </div>
-                                        <Button className='continueButton' >Continue Without Member</Button>
+                                        <Button variant="secondary" id="continueButton"
+                                            onClick={() => handleClick("Home")}
+                                        >Continue Without Member</Button>
                                     </Form>
                                 </Col>
                             </Row>

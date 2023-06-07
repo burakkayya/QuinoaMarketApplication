@@ -11,17 +11,9 @@ import Profile from './Profile';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Router>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/Home" element={<HomePage />} />
-        <Route path="/Populars" element={<PopularSellers />} />
-        <Route path="/Profile" element={<Profile />} />
-
-
-      </Routes>
-    </Router>
+    <App />
   </React.StrictMode>
+
 );
 
 // If you want to start measuring performance in your app, pass a function
