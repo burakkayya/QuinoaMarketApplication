@@ -1,0 +1,118 @@
+
+.logo-col {
+    display: flex;
+    justify-content: flex-end;
+    width: 0%;
+}
+
+.signup-col {
+    display: flex;
+    align-items: center;
+}
+
+.row {
+    flex-wrap: nowrap;
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+h6 {
+    font-weight: bold;
+}
+
+form {
+    margin-top: 50px;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-group {
+    flex-basis: 45%;
+}
+
+@media (max-width: 768px) {
+    .form-row {
+        flex-wrap: wrap;
+    }
+
+    .form-group {
+        flex-basis: 100%;
+    }
+}
+
+img.d-inline-block.align-top {
+    margin-top: -13px;
+}
+
+.signup-col.col-md-10.col-12 {
+    font-family: emoji;
+}
+
+h1.signup-header {
+    font-weight: bold;
+}
+
+.form-group.form-check {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 20px;
+}
+
+.form-check-input {
+    margin-right: 10px;
+}
+
+.form-check-input:checked {
+    background-color: #d87911;
+    border-color: #d87911;
+}
+
+.form-check-label a {
+    color: #d87911;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.signup-button {
+    flex: 0 0 auto;
+    width: 50%;
+    background-color: #29CF45;
+    border-color: #29CF45;
+}
+
+.info-icon {
+    font-size: 16px;
+    color: #d87911;
+}
+
+.help-text {
+    margin-left: 5px;
+    font-size: 14px;
+    color: #d87911;
+}
+
+button#continueButton {
+    background-color: #29CF45;
+    border-color: #29CF45;
+    width: 100%;
+}
+
+button#continueButton:hover {
+    background-color: white;
+    color: #d87911;
+    border-color: #d87911;
+}
