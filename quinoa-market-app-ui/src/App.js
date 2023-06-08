@@ -8,6 +8,7 @@ import HomePage from './HomePage';
 import PopularSellers from './PopularSellers';
 import Profile from './Profile';
 import About from './About';
+import SignUp from './SignUp'
 function App() {
   const [loading, setLoading] = useState(true);
   const [imageData, setImageData] = useState(null);
@@ -44,7 +45,7 @@ function App() {
             <Route path="/Populars" element={<PopularSellers />} />
             <Route path="/Profile" element={<Profile />} />
             <Route path="/About" element={<About />} />
-
+            <Route path="/SignUp" element={<SignUp />} />
           </Routes>
         </Router>
       </React.StrictMode>
