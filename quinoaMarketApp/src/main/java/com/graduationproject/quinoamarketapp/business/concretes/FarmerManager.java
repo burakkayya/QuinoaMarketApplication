@@ -1,11 +1,12 @@
 package com.graduationproject.quinoamarketapp.business.concretes;
 
 import com.graduationproject.quinoamarketapp.business.abstracts.FarmerService;
-import com.graduationproject.quinoamarketapp.business.abstracts.ImageService;
 import com.graduationproject.quinoamarketapp.entity.Farmer;
 import com.graduationproject.quinoamarketapp.model.FarmerRequestDTO;
 import com.graduationproject.quinoamarketapp.model.FarmerResponseDTO;
+import com.graduationproject.quinoamarketapp.model.LoginRequestDTO;
 import com.graduationproject.quinoamarketapp.repository.FarmerRepository;
+import com.graduationproject.quinoamarketapp.util.ImageUtils;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -20,8 +21,6 @@ import java.util.List;
 public class FarmerManager implements FarmerService {
     @Autowired
     private FarmerRepository farmerRepository;
-    @Autowired
-    private ImageService imageService;
     private ModelMapper modelMapper;
     @Override
     public FarmerResponseDTO getById(Long id) throws Exception {
@@ -43,8 +42,7 @@ public class FarmerManager implements FarmerService {
     public FarmerResponseDTO add(FarmerRequestDTO farmerRequest) {
         Farmer farmer = modelMapper.map(farmerRequest,Farmer.class);
         farmerRepository.save(farmer);
-        FarmerResponseDTO farmerResponse = modelMapper.map(farmer,FarmerResponseDTO.class);
-        return farmerResponse;
+        return modelMapper.map(farmer,FarmerResponseDTO.class);
     }
 
     @Override
@@ -55,8 +53,7 @@ public class FarmerManager implements FarmerService {
         }
         farmer = modelMapper.map(farmerRequest,Farmer.class);
         farmerRepository.save(farmer);
-        FarmerResponseDTO farmerResponse = modelMapper.map(farmer,FarmerResponseDTO.class);
-        return farmerResponse;
+        return modelMapper.map(farmer,FarmerResponseDTO.class);
     }
 
     public FarmerResponseDTO updateProfilePhoto(Long id, MultipartFile profilePhoto) throws Exception{
@@ -64,10 +61,9 @@ public class FarmerManager implements FarmerService {
         if(farmer == null){
             throw new Exception("Farmer not found with id "+ id);
         }
-        //farmer.setProfilePhoto(imageService.add(profilePhoto));
+        farmer.setProfilePhoto(ImageUtils.compressImage(profilePhoto.getBytes()));
         farmerRepository.save(farmer);
-        FarmerResponseDTO farmerResponse = modelMapper.map(farmer,FarmerResponseDTO.class);
-        return farmerResponse;
+        return modelMapper.map(farmer,FarmerResponseDTO.class);
     }
 
     @Override
@@ -77,5 +73,25 @@ public class FarmerManager implements FarmerService {
             throw new Exception("Farmer not found with id "+ id);
         }
         farmerRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean existsByEmailAndPassword(LoginRequestDTO request) {
+        return farmerRepository.existsByEmailAndPassword(request.getEmail(), request.getPassword());
+    }
+
+    @Override
+    public FarmerResponseDTO findByEmail(String email) {
+        return modelMapper.map(farmerRepository.findByEmail(email), FarmerResponseDTO.class);
+    }
+
+    @Override
+    public List<FarmerResponseDTO> getTopFarmersWithMostProducts() {
+        List<Farmer> farmers = farmerRepository.findTopFarmersWithMostProducts();
+        List<FarmerResponseDTO> response = farmers
+                .stream()
+                .map(farmer -> modelMapper.map(farmer, FarmerResponseDTO.class))
+                .toList();
+        return response;
     }
 }
