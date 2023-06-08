@@ -15,8 +15,8 @@ const CustomNavbar = () => {
     };
 
     const linkStyle = {
-        display: 'inline-block',
-        margin: 'auto',
+        display: 'flex',
+        justifyContent: 'center',
         backgroundColor: '#F2EEEB',
         padding: '10px 15px',
         borderRadius: '5px',
@@ -116,16 +116,16 @@ const CustomNavbar = () => {
                             Popular Sellers
                         </Link>
                         <Link
-                            to="/about"
+                            to="/About"
                             style={
-                                activeLink === '/about'
+                                activeLink === '/About'
                                     ? { ...linkStyle, ...activeLinkStyle }
                                     : linkStyle
                             }
                             onMouseEnter={handleLinkHover}
                             onMouseLeave={handleLinkLeave}
-                            onClick={() => handleLinkClick('/about')}
-                            data-isactive={activeLink === '/about'}
+                            onClick={() => handleLinkClick('/About')}
+                            data-isactive={activeLink === '/About'}
                         >
                             About
                         </Link>

@@ -46,4 +46,9 @@ public class FarmerController {
         farmerService.delete(id);
         return ResponseEntity.ok("Farmer deleted succesfully!");
     }
+
+    @GetMapping("/getTopFarmersWithMostProducts")
+    public ResponseEntity<List<FarmerResponseDTO>> getTopFarmersWithMostProducts() {
+        return ResponseEntity.ok(farmerService.getTopFarmersWithMostProducts());
+    }
 }
