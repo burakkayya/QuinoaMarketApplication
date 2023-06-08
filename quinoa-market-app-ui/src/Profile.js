@@ -107,7 +107,7 @@ function Profile() {
                                     </Col>
                                 ))}
                             </Row>
-                            <Link to="/addproduct">
+                            <Link to="/AddProduct">
                                 <Button
                                     style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                                 >
