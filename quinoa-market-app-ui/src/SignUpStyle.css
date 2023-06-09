@@ -2,12 +2,12 @@
 .logo-col {
     display: flex;
     justify-content: flex-end;
-    width: 0%;
 }
 
 .signup-col {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .row {
