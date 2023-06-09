@@ -23,7 +23,7 @@ function SignUp() {
                                 alt="Logo"
                             />
                         </Col>
-                        <Col xs={12} md={10} className="signup-col">
+                        <Col xs={12} md={8} className="signup-col">
                             <Row>
                                 <Col xs={12} md={8}>
                                     <h1 className="signup-header">SIGN UP</h1>
