@@ -88,6 +88,9 @@ public class FarmerManager implements FarmerService {
     @Override
     public List<FarmerResponseDTO> getTopFarmersWithMostProducts() {
         List<Farmer> farmers = farmerRepository.findTopFarmersWithMostProducts();
+        for (Farmer farmer: farmers) {
+            farmer.setProfilePhoto(ImageUtils.decompressImage(farmer.getProfilePhoto()));
+        }
         List<FarmerResponseDTO> response = farmers
                 .stream()
                 .map(farmer -> modelMapper.map(farmer, FarmerResponseDTO.class))
