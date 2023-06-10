@@ -27,7 +27,7 @@ const LoginPage = () => {
             }
         } catch (error) {
             console.log(error.getMessage);
-            setError('Kullanıcı adı veya parola yanlış!');
+            setError('Invalid password or username!');
         }
     }
 
