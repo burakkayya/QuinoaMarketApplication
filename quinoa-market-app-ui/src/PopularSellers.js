@@ -1,13 +1,29 @@
-import React from 'react';
+import React, {useEffect,useState} from 'react';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { IoIosArrowForward } from 'react-icons/io'; // Importing the arrow icon
+import { IoIosArrowForward } from 'react-icons/io';
 import CustomNavbar from './CustomNavbar';
 import './PopularSellers.css';
+import axios from './axiosConfig';
 
 function PopularSellers() {
+    const [topSellers, setTopSellers] = useState([]);
+    
+    useEffect(() => {
+        axios.get('/api/farmers/getTopFarmersWithMostProducts')
+          .then(response => {
+            const sellers = response.data.map(seller => ({
+              ...seller,
+            }));
+            setTopSellers(sellers);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+    }, []);
+
     return (
         <>
             <CustomNavbar />
@@ -25,14 +41,14 @@ function PopularSellers() {
             </Container>
 
             <Row xs={1} md={3} className="g-4">
-                {Array.from({ length: 4 }).map((_, idx) => (
-                    <Col key={idx}>
+                {topSellers.map(seller => (
+                    <Col key={seller.id}>
                         <Card>
                             <div className="circle-image">
-                                <Card.Img variant="top" src="./images/ProfilePhoto.avif" />
+                                <Card.Img variant="top" src={`data:image/jpg;base64,${seller.profilePhoto}`} />
                             </div>
                             <Card.Body>
-                                <Card.Title style={{ fontFamily: 'Poppins, sans-serif' }}>Alex Guerrero</Card.Title>
+                                <Card.Title style={{ fontFamily: 'Poppins, sans-serif' }}>{seller.name} {seller.surname}</Card.Title>
                                 <Card.Link className="card-link">
                                     Learn More
                                     <IoIosArrowForward style={{ marginLeft: '5px', verticalAlign: 'middle' }} size={18} />
