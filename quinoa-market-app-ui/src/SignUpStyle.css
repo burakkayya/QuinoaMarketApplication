@@ -89,7 +89,8 @@ h1.signup-header {
 
 .signup-button {
     flex: 0 0 auto;
-    width: 50%;
+    width: 260px;
+    height: 55px;
     background-color: #29CF45;
     border-color: #29CF45;
 }
@@ -108,7 +109,8 @@ h1.signup-header {
 button#continueButton {
     background-color: #29CF45;
     border-color: #29CF45;
-    width: 100%;
+    width: 260px;
+    height: 55px;
 }
 
 button#continueButton:hover {
