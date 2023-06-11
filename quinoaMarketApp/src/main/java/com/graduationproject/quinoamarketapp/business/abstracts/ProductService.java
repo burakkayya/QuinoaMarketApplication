@@ -11,6 +11,7 @@ import java.util.List;
 public interface ProductService {
     ProductResponseDTO add(ProductRequestDTO productRequestDTO,MultipartFile productPhoto) throws Exception;
     List<ProductResponseDTO> getAll();
+    List<ProductResponseDTO> getDistinctByPredictionName();
     ProductResponseDTO getById(Long id) throws Exception;
     ProductResponseDTO update(ProductRequestDTO productRequest) throws Exception;
     void delete(Long id) throws Exception;
