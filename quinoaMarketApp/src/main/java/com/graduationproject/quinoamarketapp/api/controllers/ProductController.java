@@ -38,6 +38,10 @@ public class ProductController{
     ResponseEntity<ProductResponseDTO> getById(@PathVariable Long id) throws Exception {
         return ResponseEntity.ok(productService.getById(id));
     }
+    @GetMapping("/home-products")
+    ResponseEntity<List<ProductResponseDTO>> getDistinctByPredictionName(){
+        return ResponseEntity.ok(productService.getDistinctByPredictionName());
+    }
 
     @PutMapping("/update")
     ResponseEntity<ProductResponseDTO> update(@RequestBody ProductRequestDTO productRequest) throws Exception {
