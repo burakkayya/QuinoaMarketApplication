@@ -27,6 +27,8 @@ public class Farmer {
     private String email;
     @Column(name = "phoneNo", unique = true, nullable = false)
     private String phoneNo;
+    @Column(name = "address", nullable = false)
+    private String address;
     @Lob
     @Column(name = "profilePhoto",length = 1000)
     private byte[] profilePhoto;
