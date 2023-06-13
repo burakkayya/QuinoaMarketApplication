@@ -53,12 +53,12 @@ function Profile() {
             <UserNavbar />
             <Container fluid>
                 <Row className="justify-content-center">
-                    <Col sm={4} className="d-flex align-items-center justify-content-center">
+                    <Col sm={4} className="align-items-center justify-content-center">
                         <div className="profile-photo">
                             <Image src={profilePhoto} roundedCircle fluid style={{ width: '250px' }} />
                         </div>
                     </Col>
-                    <Col sm={7} className="d-flex flex-column align-items-center">
+                    <Col sm={7} className="flex-column align-items-center">
                         <div className="profile-info">
                             <Row className="profile-header d-flex align-items-center">
                                 <Col className="pl-0">
@@ -91,7 +91,7 @@ function Profile() {
                                 </p>
                             </div>
                             <h3 style={{ marginTop: '30px' }}>My Products</h3>
-                            <Row>
+                            <Row className="products">
                                 {products.map((product) => (
                                     <Col sm={6} key={product.id}>
                                         <div className="product-item">
