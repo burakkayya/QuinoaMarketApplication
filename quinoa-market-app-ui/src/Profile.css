@@ -35,7 +35,7 @@ margin-top: 3vh;
     background-color: #d87911;
     border-color: #d87911;
     text-decoration: none;
-    width: 25%;
+    width: 10rem;
     margin-right: auto;
     margin-top: 25px;
     padding: 5px;
@@ -51,4 +51,10 @@ margin-top: 3vh;
 }
 a{
     text-decoration: none;
+}
+.products.row{
+    flex-wrap: wrap;
+}
+label.form-check-label {
+    display: flex;
 }
