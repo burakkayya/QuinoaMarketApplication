@@ -10,6 +10,8 @@ import Profile from './Profile';
 import About from './About';
 import AddProduct from './AddProduct';
 import SignUp from './SignUp';
+import PopularSellersProfile from './PopularSellersProfile';
+
 function App() {
   const [loading, setLoading] = useState(true);
   const [imageData, setImageData] = useState(null);
@@ -48,6 +50,7 @@ function App() {
             <Route path="/About" element={<About />} />
             <Route path="/AddProduct" element={<AddProduct />} />
             <Route path="/SignUp" element={<SignUp />} />
+            <Route path="/PopularSellerProfile/:id" element={<PopularSellersProfile />} />
           </Routes>
         </Router>
       </React.StrictMode>
