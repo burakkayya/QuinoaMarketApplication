@@ -1,4 +1,5 @@
-import React, {useEffect,useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -10,18 +11,18 @@ import axios from './axiosConfig';
 
 function PopularSellers() {
     const [topSellers, setTopSellers] = useState([]);
-    
+
     useEffect(() => {
         axios.get('/api/farmers/getTopFarmersWithMostProducts')
-          .then(response => {
-            const sellers = response.data.map(seller => ({
-              ...seller,
-            }));
-            setTopSellers(sellers);
-          })
-          .catch(error => {
-            console.log(error);
-          });
+            .then(response => {
+                const sellers = response.data.map(seller => ({
+                    ...seller,
+                }));
+                setTopSellers(sellers);
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }, []);
 
     return (
@@ -49,10 +50,10 @@ function PopularSellers() {
                             </div>
                             <Card.Body>
                                 <Card.Title style={{ fontFamily: 'Poppins, sans-serif' }}>{seller.name} {seller.surname}</Card.Title>
-                                <Card.Link className="card-link">
+                                <Link to={`/PopularSellerProfile/${seller.id}`} className="card-link">
                                     Learn More
                                     <IoIosArrowForward style={{ marginLeft: '5px', verticalAlign: 'middle' }} size={18} />
-                                </Card.Link>
+                                </Link>
                             </Card.Body>
                         </Card>
                     </Col>
