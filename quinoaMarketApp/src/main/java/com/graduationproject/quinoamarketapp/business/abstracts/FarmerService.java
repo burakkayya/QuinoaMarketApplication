@@ -10,7 +10,7 @@ import java.util.List;
 public interface FarmerService {
     FarmerResponseDTO getById(Long id) throws Exception;
     List<FarmerResponseDTO> getAll();
-    FarmerResponseDTO add(FarmerRequestDTO farmerRequest);
+    FarmerResponseDTO add(FarmerRequestDTO farmerRequest, MultipartFile productPhoto) throws Exception;
     FarmerResponseDTO update(FarmerRequestDTO farmerRequest) throws Exception;
     FarmerResponseDTO updateProfilePhoto(Long id, MultipartFile profilePhoto) throws Exception;
     void delete(Long id) throws Exception;

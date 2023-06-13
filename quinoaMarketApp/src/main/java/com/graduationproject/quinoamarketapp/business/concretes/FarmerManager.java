@@ -12,14 +12,15 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class FarmerManager implements FarmerService {
-    @Autowired
     private FarmerRepository farmerRepository;
     private ModelMapper modelMapper;
     @Override
@@ -40,8 +41,9 @@ public class FarmerManager implements FarmerService {
     }
 
     @Override
-    public FarmerResponseDTO add(FarmerRequestDTO farmerRequest) {
+    public FarmerResponseDTO add(FarmerRequestDTO farmerRequest, MultipartFile profilePhoto) throws Exception {
         Farmer farmer = modelMapper.map(farmerRequest,Farmer.class);
+        farmer.setProfilePhoto(ImageUtils.compressImage(profilePhoto.getBytes()));
         farmerRepository.save(farmer);
         return modelMapper.map(farmer,FarmerResponseDTO.class);
     }

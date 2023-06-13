@@ -10,7 +10,6 @@ public class QuinoaMarketAppApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(QuinoaMarketAppApplication.class, args);
-
     }
 
 }

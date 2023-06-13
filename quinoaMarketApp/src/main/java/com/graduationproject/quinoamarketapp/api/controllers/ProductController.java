@@ -2,6 +2,7 @@ package com.graduationproject.quinoamarketapp.api.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.graduationproject.quinoamarketapp.business.abstracts.ProductService;
+import com.graduationproject.quinoamarketapp.model.FarmerResponseDTO;
 import com.graduationproject.quinoamarketapp.model.ProductRequestDTO;
 import com.graduationproject.quinoamarketapp.model.ProductResponseDTO;
 import lombok.AllArgsConstructor;
@@ -18,15 +19,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/products")
 public class ProductController{
-
-    @Autowired
-   private final ProductService productService;
-    @Autowired
+    private final ProductService productService;
     private final ObjectMapper objectMapper;
     @PostMapping("/add")
-    ResponseEntity<ProductResponseDTO> addProduct(@RequestParam("file") MultipartFile file,@RequestParam("product") String productRequest) throws Exception {
+    ResponseEntity<ProductResponseDTO> addProduct(@RequestParam("file") MultipartFile file, @RequestParam("product") String productRequest) throws Exception {
         ProductRequestDTO productRequestDTO = objectMapper.readValue(productRequest, ProductRequestDTO.class);
-        return ResponseEntity.ok(productService.add(productRequestDTO,file));
+        return ResponseEntity.ok(productService.add(productRequestDTO, file));
     }
 
     @GetMapping()
@@ -46,6 +44,11 @@ public class ProductController{
     @PutMapping("/update")
     ResponseEntity<ProductResponseDTO> update(@RequestBody ProductRequestDTO productRequest) throws Exception {
         return ResponseEntity.ok(productService.update(productRequest));
+    }
+
+    @PutMapping("/update-product-photo/{id}")
+    public ResponseEntity<ProductResponseDTO> updateProductPhoto(@PathVariable Long id, @RequestParam("file") MultipartFile productPhoto) throws Exception {
+        return ResponseEntity.ok(productService.updateProfilePhoto(id, productPhoto));
     }
 
     @DeleteMapping("/delete/{id}")

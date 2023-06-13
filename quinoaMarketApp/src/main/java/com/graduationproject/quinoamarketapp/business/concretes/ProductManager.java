@@ -1,7 +1,9 @@
 package com.graduationproject.quinoamarketapp.business.concretes;
 
 import com.graduationproject.quinoamarketapp.business.abstracts.ProductService;
+import com.graduationproject.quinoamarketapp.entity.Farmer;
 import com.graduationproject.quinoamarketapp.entity.Product;
+import com.graduationproject.quinoamarketapp.model.FarmerResponseDTO;
 import com.graduationproject.quinoamarketapp.model.ProductRequestDTO;
 import com.graduationproject.quinoamarketapp.model.ProductResponseDTO;
 import com.graduationproject.quinoamarketapp.repository.ProductRepository;
@@ -71,9 +73,19 @@ public class ProductManager implements ProductService {
     public ProductResponseDTO update(ProductRequestDTO productRequest) throws Exception {
         Product product = productRepository.findById(productRequest.getId()).orElse(null);
         if(product == null){
-            throw new Exception("Farmer not found with id "+ product.getId());
+            throw new Exception("Product not found with id "+ product.getId());
         }
         product = modelMapper.map(productRequest,Product.class);
+        productRepository.save(product);
+        return modelMapper.map(product,ProductResponseDTO.class);
+    }
+
+    public ProductResponseDTO updateProfilePhoto(Long id, MultipartFile profilePhoto) throws Exception{
+        Product product = productRepository.findById(id).orElse(null);
+        if(product == null){
+            throw new Exception("Product not found with id "+ id);
+        }
+        product.setProductPhoto(ImageUtils.compressImage(profilePhoto.getBytes()));
         productRepository.save(product);
         return modelMapper.map(product,ProductResponseDTO.class);
     }
