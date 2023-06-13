@@ -3,11 +3,12 @@ import CustomNavbar from "./CustomNavbar";
 import Card from 'react-bootstrap/Card';
 import './HomePage.css';
 import axios from "./axiosConfig";
+import UserNavbar from "./UserNavbar";
 
 function HomePage() {
-
     const [products, setProducts] = useState([]);
-
+    const email = sessionStorage.getItem('email');
+    
     useEffect(() => {
         axios.get("/api/products/home-products")
             .then(response => {
@@ -17,10 +18,10 @@ function HomePage() {
                 console.error("Error fetching products:", error);
             });
     }, []);
-
+    
     return (
         <>
-            <CustomNavbar />
+            {email ? <UserNavbar /> : <CustomNavbar />}
             <div className="container">
                 {Array.from({ length: Math.ceil(products.length / 3) }).map((_, rowIndex) => (
                     <div key={rowIndex} className="row">

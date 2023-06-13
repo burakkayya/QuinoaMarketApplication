@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Image, Form } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import CustomNavbar from './CustomNavbar';
+import UserNavbar from './UserNavbar';
 import axios from './axiosConfig';
 import './Profile.css';
 
 function PopularSellersProfile() {
     const { id } = useParams();
     const [popularSeller, setPopularSeller] = useState(null);
+    const email = sessionStorage.getItem('email');
 
     useEffect(() => {
         axios.get(`/api/farmers/${id}`)
@@ -32,7 +34,7 @@ function PopularSellersProfile() {
 
     return (
         <>
-            <CustomNavbar />
+            {email ? <UserNavbar /> : <CustomNavbar />}
             <Container fluid>
                 <Row className="justify-content-center">
                     <Col sm={4} className="d-flex align-items-center justify-content-center">
