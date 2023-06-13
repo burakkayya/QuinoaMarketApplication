@@ -13,5 +13,6 @@ public class FarmerRequestDTO {
     private String password;
     private String email;
     private String phoneNo;
+    private String address;
     private byte[] profilePhoto;
 }
