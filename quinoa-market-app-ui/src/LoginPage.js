@@ -23,6 +23,7 @@ const LoginPage = () => {
                 password: password
             });
             if (response.status === 200) {
+                sessionStorage.setItem('email',response.data.email)
                 navigate('/Home');
             }
         } catch (error) {

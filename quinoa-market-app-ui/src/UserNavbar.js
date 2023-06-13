@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 
-const CustomNavbar = () => {
+const UserNavbar = () => {
     const navbarStyle = {
         paddingTop: 0,
         paddingBottom: 0,
@@ -15,16 +15,18 @@ const CustomNavbar = () => {
     };
 
     const linkStyle = {
-        display: 'block',
-        margin: 'auto',
+        display: 'flex',
+        justifyContent: 'center',
         backgroundColor: '#F2EEEB',
         padding: '10px 15px',
         borderRadius: '5px',
-        width: '100%',
         textAlign: 'center',
         color: '#5E5B3E',
         textDecoration: 'none',
         transition: 'background-color 0.3s, color 0.3s',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
     };
 
     const activeLinkStyle = {
@@ -44,6 +46,10 @@ const CustomNavbar = () => {
         setActiveLink(location.pathname);
     }, [location]);
 
+    const handleLogout = () => {
+        sessionStorage.clear();
+        handleLinkClick('/');
+    }
     const handleLinkHover = (event) => {
         if (
             event.target.style.backgroundColor !== activeLinkStyle.backgroundColor &&
@@ -134,7 +140,7 @@ const CustomNavbar = () => {
                             }
                             onMouseEnter={handleLinkHover}
                             onMouseLeave={handleLinkLeave}
-                            onClick={() => handleLinkClick('/')}
+                            onClick={() => handleLogout()}
                             data-isactive={activeLink === '/'}
                         >
                             Logout
@@ -159,4 +165,4 @@ const CustomNavbar = () => {
     );
 };
 
-export default CustomNavbar;
+export default UserNavbar;

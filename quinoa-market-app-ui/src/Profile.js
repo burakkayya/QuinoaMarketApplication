@@ -4,6 +4,7 @@ import { IoMdCreate, IoIosAdd } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import CustomNavbar from './CustomNavbar';
 import './Profile.css';
+import UserNavbar from './UserNavbar';
 
 function Profile() {
     const [showModal, setShowModal] = useState(false);
@@ -49,7 +50,7 @@ function Profile() {
 
     return (
         <>
-            <CustomNavbar />
+            <UserNavbar />
             <Container fluid>
                 <Row className="justify-content-center">
                     <Col sm={4} className="d-flex align-items-center justify-content-center">

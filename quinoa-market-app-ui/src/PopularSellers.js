@@ -6,12 +6,14 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { IoIosArrowForward } from 'react-icons/io';
 import CustomNavbar from './CustomNavbar';
+import UserNavbar from './UserNavbar';
 import './PopularSellers.css';
 import axios from './axiosConfig';
 
 function PopularSellers() {
     const [topSellers, setTopSellers] = useState([]);
-
+    const email = sessionStorage.getItem('email');
+    
     useEffect(() => {
         axios.get('/api/farmers/getTopFarmersWithMostProducts')
             .then(response => {
@@ -27,7 +29,7 @@ function PopularSellers() {
 
     return (
         <>
-            <CustomNavbar />
+            {email ? <UserNavbar /> : <CustomNavbar />}
             <Container className='header'>
                 <Row className="justify-content-md-center">
                     <Col xs lg="6">

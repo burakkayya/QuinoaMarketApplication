@@ -88,6 +88,20 @@ const CustomNavbar = () => {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto">
                         <Link
+                            to="/"
+                            style={
+                                activeLink === '/'
+                                    ? { ...linkStyle, ...activeLinkStyle }
+                                    : linkStyle
+                            }
+                            onMouseEnter={handleLinkHover}
+                            onMouseLeave={handleLinkLeave}
+                            onClick={() => handleLinkClick('/')}
+                            data-isactive={activeLink === '/'}
+                        >
+                            Login
+                        </Link>
+                        <Link
                             to="/Home"
                             style={
                                 activeLink === '/Home'
@@ -129,22 +143,6 @@ const CustomNavbar = () => {
                         >
                             About
                         </Link>
-                        {!isHomePage && (
-                            <Link
-                                to="/"
-                                style={
-                                    activeLink === '/'
-                                        ? { ...linkStyle, ...activeLinkStyle }
-                                        : linkStyle
-                                }
-                                onMouseEnter={handleLinkHover}
-                                onMouseLeave={handleLinkLeave}
-                                onClick={() => handleLinkClick('/')}
-                                data-isactive={activeLink === '/'}
-                            >
-                                Logout
-                            </Link>
-                        )}
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
