@@ -24,6 +24,7 @@ const LoginPage = () => {
             });
             if (response.status === 200) {
                 sessionStorage.setItem('email',response.data.email)
+                sessionStorage.setItem('id',response.data.id)
                 navigate('/Home');
             }
         } catch (error) {
