@@ -21,5 +21,5 @@ public class Product {
     private byte[] productPhoto;
     private String predictionName;
     private String info;
-    private Long stock;
+    private boolean stockStatus;
 }
