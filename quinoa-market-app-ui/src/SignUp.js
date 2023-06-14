@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import axios from './axiosConfig';
+import CustomNavbar from './CustomNavbar';
 import './SignUpStyle.css';
 
 function SignUp() {
@@ -13,25 +14,60 @@ function SignUp() {
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
     const [agreeTerms, setAgreeTerms] = useState(false);
+    const [photo, setPhoto] = useState('./images/profilephoto.jpg');
+    const fileInputRef = useRef(null);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        fetch(photo)
+          .then((response) => response.blob())
+          .then((blob) => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              const base64Photo = reader.result;
+              setPhoto(base64Photo);
+            };
+            reader.readAsDataURL(blob);
+          })
+          .catch((error) => {
+            console.error('An error occurred while fetching the default photo:', error);
+          });
+    }, []);
 
     function handleClick(path) {
         navigate(path);
     }
 
+    const handleProfilePhotoButtonClick = () => {
+        fileInputRef.current.click();
+    };
+
+    const handlePhotoUpload = (event) => {
+        const file = event.target.files[0];
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const base64Photo = e.target.result;
+            setPhoto(base64Photo);
+        };
+        reader.readAsDataURL(file);
+    };
+
     const handleSignUp = async (event) => {
         event.preventDefault();
-        const data = {
+
+        const farmerData = {
             name: name,
             surname: surname,
             password: password,
             phoneNo: phoneNo,
             address: address,
-            email: email
+            email: email,
+            profilePhoto: photo
         };
         try {
-            const response = await axios.post('/api/sign-up', data);
+            const response = await axios.post('/api/sign-up', farmerData)
             if (response.status === 200) {
                 navigate('/');
             }
@@ -43,21 +79,32 @@ function SignUp() {
 
     return (
         <>
+            <CustomNavbar />
             <Container>
                 <Row>
-                    <Col xs={12} md={2} className="logo-col">
+                    <Col xs={12} md={2}>
                         <img
-                            src="/images/logo.png"
-                            width="300"
+                            src={photo}
                             height="200"
-                            className="d-inline-block align-top"
-                            alt="Logo"
+                            width="230"
+                            className="photo-col"
+                            alt="profile photo"
+                        />
+                        <Button variant="secondary" className="profile-photo-button" onClick={handleProfilePhotoButtonClick}>
+                            Choose Photo
+                        </Button>
+                        <input
+                            type="file"
+                            id="image-upload"
+                            accept="image/*"
+                            style={{ display: 'none' }}
+                            ref={fileInputRef}
+                            onChange={handlePhotoUpload}
                         />
                     </Col>
                     <Col xs={12} md={8} className="signup-col">
                         <Row>
                             <Col xs={12} md={8}>
-                                <h1 className="signup-header">SIGN UP</h1>
                                 <p className="signup-description">
                                     Create your own market portfolio in the Quinoa Market. If you want to create a sales Profile, become a member
                                     and add your products to your portfolio. If you just want to review products, you can view popular sellers and

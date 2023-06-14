@@ -1,7 +1,5 @@
-
-.logo-col {
-    display: flex;
-    justify-content: flex-end;
+.photo-col {
+    margin-top: 20px;
 }
 
 .signup-col {
@@ -85,6 +83,7 @@ h1.signup-header {
     justify-content: space-between;
     align-items: center;
     margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .signup-button {
@@ -93,6 +92,13 @@ h1.signup-header {
     height: 55px;
     background-color: #29CF45;
     border-color: #29CF45;
+}
+
+.profile-photo-button {
+    flex: 0 0 auto;
+    width: 200px;
+    height: 40px;
+    margin-left: 15px;
 }
 
 .info-icon {
