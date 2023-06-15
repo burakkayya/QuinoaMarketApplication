@@ -1,41 +1,77 @@
-import React, { useState } from 'react';
-import { Container, Row, Col, Image, Button, Modal, Form } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Image, Button, Modal, Form, Alert } from 'react-bootstrap';
 import { IoMdCreate, IoIosAdd } from 'react-icons/io';
 import { Link } from 'react-router-dom';
-import CustomNavbar from './CustomNavbar';
-import './Profile.css';
+import axios from './axiosConfig';
 import UserNavbar from './UserNavbar';
+import './Profile.css';
 
 function Profile() {
     const [showModal, setShowModal] = useState(false);
-    const [name, setName] = useState('John');
-    const [surname, setSurname] = useState('Doe');
-    const [address, setAddress] = useState('123 Main St');
-    const [phone, setPhone] = useState('555-1234');
-    const [email, setEmail] = useState('johndoe@example.com');
-    const [profilePhoto, setProfilePhoto] = useState('./images/ProfilePhoto2.png');
-    const [products, setProducts] = useState([
-        { id: 1, name: 'Yellow Armellio Secao', inStock: true },
-        { id: 2, name: 'Kankolla', inStock: false },
-        { id: 3, name: 'Ilpania', inStock: true },
-        { id: 4, name: 'Inia Snta Ana', inStock: true },
-        { id: 5, name: 'Black Nefra Colleano', inStock: false },
-        { id: 6, name: 'Hv', inStock: true },
-    ]);
+    const [id, setId] = useState(sessionStorage.getItem('id'));
+    const [name, setName] = useState('');
+    const [surname, setSurname] = useState('');
+    const [address, setAddress] = useState('');
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
+    const [profilePhoto, setProfilePhoto] = useState('');
+    const [products, setProducts] = useState([]);
+    const [error, setError] = useState('');
 
-    const handleSave = () => {
-        // Save updated profile information here
+    useEffect(() => {
+        setEmail(sessionStorage.getItem('email'));
+        console.log(id);
+        const fetchProfileData = async () => {
+            try {
+                const response = await axios.get(`/api/farmers/${id}`);
+                const { name, surname, address, phoneNo, email, profilePhoto, products } = response.data;
+                setName(name);
+                setSurname(surname);
+                setAddress(address);
+                setPhone(phoneNo);
+                setEmail(email);
+                setProfilePhoto(profilePhoto);
+                setProducts(products);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchProfileData();
+    }, []);
+
+    const handleSave =  async (event) => {
+
         setShowModal(false);
     };
 
-    const handleProfilePhotoChange = (e) => {
-        const file = e.target.files[0];
+    const handlePhotoUpload = async (event) => {
+        const file = event.target.files[0];
         const reader = new FileReader();
-        reader.onload = () => {
-            setProfilePhoto(reader.result);
-        };
-        reader.readAsDataURL(file);
+        reader.onload = (e) => {
+            const base64Photo = e.target.result;
+            const croppedPhoto = base64Photo.substring(base64Photo.indexOf(',') + 1);
+            setProfilePhoto(croppedPhoto);
+        };    
+        await updateProfilePhoto(file);     
+        reader.readAsDataURL(file);              
     };
+
+    const updateProfilePhoto = async (file) => {
+        try {
+            const formData = new FormData();
+            formData.append('file', file);
+            console.log("çalıştı")
+            const response = await axios.put(`/api/farmers/update-profile-photo/${id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+        } catch (error) {
+            setError('An error occured while updating profile photo');
+            console.error(error);
+        }
+    }
 
     const toggleStockStatus = (productId) => {
         setProducts((prevProducts) =>
@@ -55,7 +91,7 @@ function Profile() {
                 <Row className="justify-content-center">
                     <Col sm={4} className="align-items-center justify-content-center">
                         <div className="profile-photo">
-                            <Image src={profilePhoto} roundedCircle fluid style={{ width: '250px' }} />
+                            <Image id="profile-image" src={`data:image/jpg;base64,${profilePhoto}`} roundedCircle fluid style={{ width: '250px' }} />
                         </div>
                     </Col>
                     <Col sm={7} className="flex-column align-items-center">
@@ -98,8 +134,8 @@ function Profile() {
                                             <Form.Check
                                                 type="checkbox"
                                                 id={`product-${product.id}`}
-                                                label={product.name}
-                                                checked={product.inStock}
+                                                label={product.predictionName}
+                                                checked={product.stock}
                                                 onChange={() => toggleStockStatus(product.id)}
                                                 custom
                                                 inline
@@ -126,6 +162,7 @@ function Profile() {
                     </Modal.Header>
                     <Modal.Body>
                         <Form>
+                            {error && <Alert variant="danger">{error}</Alert>}
                             <Form.Group>
                                 <Form.Label>Name</Form.Label>
                                 <Form.Control type="text" value={name} onChange={(e) => setName(e.target.value)} />
@@ -148,7 +185,7 @@ function Profile() {
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Profile Photo</Form.Label>
-                                <Form.Control type="file" accept="image/*" onChange={handleProfilePhotoChange} />
+                                <Form.Control type="file" accept="image/*" onChange={handlePhotoUpload} />
                             </Form.Group>
                         </Form>
                     </Modal.Body>

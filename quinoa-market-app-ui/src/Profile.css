@@ -29,6 +29,9 @@ margin-top: 3vh;
     align-items: center;
     justify-content: center;
 }
+form {
+    margin-top: 0px !important;
+}
 
 .btn {
     color: var(--bs-btn-hover-color);
