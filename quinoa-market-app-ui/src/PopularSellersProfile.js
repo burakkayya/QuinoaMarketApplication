@@ -10,6 +10,7 @@ function PopularSellersProfile() {
     const { id } = useParams();
     const [popularSeller, setPopularSeller] = useState(null);
     const email = sessionStorage.getItem('email');
+    const uniquePredictionNames = [];
 
     useEffect(() => {
         axios.get(`/api/farmers/${id}`)
@@ -63,21 +64,27 @@ function PopularSellersProfile() {
                             <h3 style={{ marginTop: '30px' }} className='fs-2'>Products</h3>
                             {productsChunks.map((chunk, index) => (
                                 <Row key={index}>
-                                    {chunk.map((product) => (
-                                        <Col sm={6} key={product.id}>
-                                            <div className="product-item">
-                                                <Form.Check
-                                                    type="checkbox"
-                                                    id={`product-${product.id}`}
-                                                    label={product.predictionName}
-                                                    checked = {true}
-                                                    onChange={() => { }}
-                                                    custom
-                                                    inline
-                                                />
-                                            </div>
-                                        </Col>
-                                    ))}
+                                    {chunk.map((product) => {
+                                        if (!uniquePredictionNames.includes(product.predictionName)) {
+                                            uniquePredictionNames.push(product.predictionName);
+                                            return (
+                                                <Col sm={6} key={product.id}>
+                                                    <div className="product-item">
+                                                        <Form.Check
+                                                            type="checkbox"
+                                                            id={`product-${product.id}`}
+                                                            label={product.predictionName}
+                                                            checked={true}
+                                                            onChange={() => { }}
+                                                            custom
+                                                            inline
+                                                        />
+                                                    </div>
+                                                </Col>
+                                            );
+                                        }
+                                        return null;
+                                    })}
                                 </Row>
                             ))}
                         </div>

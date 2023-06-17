@@ -17,10 +17,10 @@ function Profile() {
     const [profilePhoto, setProfilePhoto] = useState('');
     const [products, setProducts] = useState([]);
     const [error, setError] = useState('');
+    const uniquePredictionNames = [];
 
     useEffect(() => {
         setEmail(sessionStorage.getItem('email'));
-        console.log(id);
         const fetchProfileData = async () => {
             try {
                 const response = await axios.get(`/api/farmers/${id}`);
@@ -40,7 +40,7 @@ function Profile() {
         fetchProfileData();
     }, []);
 
-    const handleSave =  async (event) => {
+    const handleSave = async (event) => {
 
         setShowModal(false);
     };
@@ -52,16 +52,15 @@ function Profile() {
             const base64Photo = e.target.result;
             const croppedPhoto = base64Photo.substring(base64Photo.indexOf(',') + 1);
             setProfilePhoto(croppedPhoto);
-        };    
-        await updateProfilePhoto(file);     
-        reader.readAsDataURL(file);              
+        };
+        await updateProfilePhoto(file);
+        reader.readAsDataURL(file);
     };
 
     const updateProfilePhoto = async (file) => {
         try {
             const formData = new FormData();
             formData.append('file', file);
-            console.log("çalıştı")
             const response = await axios.put(`/api/farmers/update-profile-photo/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -77,7 +76,7 @@ function Profile() {
         setProducts((prevProducts) =>
             prevProducts.map((product) => {
                 if (product.id === productId) {
-                    return { ...product, inStock: !product.inStock };
+                    return { ...product, stockStatus: !product.stockStatus };
                 }
                 return product;
             })
@@ -128,21 +127,26 @@ function Profile() {
                             </div>
                             <h3 style={{ marginTop: '30px' }}>My Products</h3>
                             <Row className="products">
-                                {products.map((product) => (
-                                    <Col sm={6} key={product.id}>
-                                        <div className="product-item">
-                                            <Form.Check
-                                                type="checkbox"
-                                                id={`product-${product.id}`}
-                                                label={product.predictionName}
-                                                checked={product.stock}
-                                                onChange={() => toggleStockStatus(product.id)}
-                                                custom
-                                                inline
-                                            />
-                                        </div>
-                                    </Col>
-                                ))}
+                                {products.map((product) => {
+                                    if (!uniquePredictionNames.includes(product.predictionName)) {
+                                        uniquePredictionNames.push(product.predictionName);
+                                        return (
+                                            <Col sm={6} key={product.id}>
+                                                <div className="product-item">
+                                                    <Form.Check
+                                                        type="checkbox"
+                                                        id={`product-${product.id}`}
+                                                        label={product.predictionName}
+                                                        checked={product.stockStatus}
+                                                        onChange={() => toggleStockStatus(product.id)}
+                                                        custom
+                                                        inline
+                                                    />
+                                                </div>
+                                            </Col>
+                                        );
+                                    }
+                                })}
                             </Row>
                             <Link to="/AddProduct">
                                 <Button
