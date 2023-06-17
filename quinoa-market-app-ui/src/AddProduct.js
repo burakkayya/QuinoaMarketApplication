@@ -7,8 +7,6 @@ import './AddProduct.css';
 import quinoaDatas from './QuinoaData'
 import axios from "./axiosConfig";
 function AddProduct() {
-    const [productName, setProductName] = useState('Lorem Ipsum');
-    const [productDescription, setProductDescription] = useState('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.');
     const [addImage, setAddImage] = useState('./images/addimage.png');
     const fileInputRef = useRef(null);
     const [predictedProduct, setPredictedProduct] = useState('');
@@ -16,6 +14,7 @@ function AddProduct() {
     const [productPhoto, setProductPhoto] = useState(null);
     const [info, setInfo] = useState('');
     const farmerId = sessionStorage.getItem('id');
+    const [photo, setPhoto] = useState(null); 
 
     const Product = ({ name, description }) => {
         return (
@@ -60,7 +59,7 @@ function AddProduct() {
             handlePrediction(file);
         };
         reader.readAsDataURL(file);
-
+        setPhoto(file);
     };
 
     const handleButtonClick = () => {
@@ -70,8 +69,7 @@ function AddProduct() {
     const handleAddProduct = async () => {
         try {
             const formData = new FormData();
-            formData.append('file', productPhoto, 'productPhoto.jpg');
-
+            formData.append('file', photo, 'productPhoto.jpg');
             const productData = {
                 predictionName: predictedProduct,
                 stockStatus: selectedStatusValue === 'In Stock',
@@ -79,13 +77,12 @@ function AddProduct() {
                 info: info,
             };
             formData.append('product', JSON.stringify(productData));
-
             const response = await axios.post('/api/products/add', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-
+            
             console.log('Ürün eklendi:', response.data);
         } catch (error) {
             console.error('Ürün eklenirken bir hata oluştu:', error);

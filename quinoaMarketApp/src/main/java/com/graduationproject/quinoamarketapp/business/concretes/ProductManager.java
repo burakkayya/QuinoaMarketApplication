@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -23,8 +24,6 @@ import java.util.Set;
 public class ProductManager implements ProductService {
     private ProductRepository productRepository;
     private final ModelMapper modelMapper;
-    private Set<String> distinctPredictionNames;
-    private List<Product> distinctProducts;
     @Override
     public ProductResponseDTO add(ProductRequestDTO productRequestDTO, MultipartFile productPhoto) throws Exception {
         // TODO:FARMER SETLEME ISLEMI YAPILACAK
@@ -48,7 +47,8 @@ public class ProductManager implements ProductService {
     @Override
     public List<ProductResponseDTO> getDistinctByPredictionName() {
         List<Product> allProducts = productRepository.findAll();
-
+        Set<String> distinctPredictionNames = new HashSet<>();
+        List<Product> distinctProducts = new ArrayList<>();
         for (Product product : allProducts) {
             String predictionName = product.getPredictionName();
             if (predictionName != null && !distinctPredictionNames.contains(predictionName)) {
