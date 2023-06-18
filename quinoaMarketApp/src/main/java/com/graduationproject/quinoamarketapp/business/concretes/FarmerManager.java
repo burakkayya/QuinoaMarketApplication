@@ -54,6 +54,11 @@ public class FarmerManager implements FarmerService {
         if(farmer == null){
             throw new Exception("Farmer not found with id "+ farmerRequest.getId());
         }
+        farmerRequest.setPassword(farmer.getPassword());
+        farmerRequest.setProfilePhoto(farmer.getProfilePhoto());
+        if(farmer.getProducts() != null){
+            farmerRequest.setProducts(farmer.getProducts());
+        }
         farmer = modelMapper.map(farmerRequest,Farmer.class);
         farmerRepository.save(farmer);
         return modelMapper.map(farmer,FarmerResponseDTO.class);

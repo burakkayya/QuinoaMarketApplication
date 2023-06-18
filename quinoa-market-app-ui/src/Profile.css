@@ -61,3 +61,39 @@ a{
 label.form-check-label {
     display: flex;
 }
+
+.camera-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    border: none; 
+    background: none; 
+    padding: 0; 
+    cursor: pointer;
+  }
+  .camera-button {
+    outline: none;
+  }
+button.camera-button.btn.btn-light {
+    margin-left: 100px;
+}
+.success-message {
+    position: fixed;
+    top: 20%;
+    right: 20px;
+    transform: translateY(-50%);
+    background-color: rgb(120, 212, 106);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .success-message.show {
+    opacity: 1;
+  }
+  

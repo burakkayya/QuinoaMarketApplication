@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import axios from './axiosConfig';
 import UserNavbar from './UserNavbar';
 import './Profile.css';
+import {IoMdCamera } from 'react-icons/io';
 
 function Profile() {
     const [showModal, setShowModal] = useState(false);
@@ -18,6 +19,7 @@ function Profile() {
     const [products, setProducts] = useState([]);
     const [error, setError] = useState('');
     const uniquePredictionNames = [];
+    const [successMessage, setSuccessMessage] = useState('');
 
     useEffect(() => {
         setEmail(sessionStorage.getItem('email'));
@@ -36,41 +38,80 @@ function Profile() {
                 console.error(error);
             }
         };
-
         fetchProfileData();
-    }, []);
+            if (successMessage) {
+              const timer = setTimeout(() => {
+                setSuccessMessage('');
+              }, 2000); 
+          
+              return () => clearTimeout(timer);
+            }
+    }, [successMessage]);
 
     const handleSave = async (event) => {
-
+         console.log(id)
+         try {
+          const updatedProfile = {
+            id: id,
+            name: name,
+            surname: surname,
+            address: address,
+            phoneNo: phone,
+            email: email,
+          };
+        console.log(updatedProfile)
+         const response = await axios.put('/api/farmers/update',updatedProfile);
+         console.log(response.data);
+    
+          setName(response.data.name);
+          setSurname(response.data.surname);
+          setAddress(response.data.address);
+          setPhone(response.data.phoneNo);
+          setEmail(response.data.email);
+          setProducts(response.data.products);
+          setSuccessMessage('Profile updated successfully.');
+        } catch (error) {
+          setError('An error occurred while updating the profile');
+          console.error(error);
+        }
         setShowModal(false);
     };
-
-    const handlePhotoUpload = async (event) => {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-        reader.onload = (e) => {
+    
+    const handlePhotoUpload = async () => {
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*';
+        fileInput.onchange = async (event) => {
+          const file = event.target.files[0];
+          const reader = new FileReader();
+          reader.onload = (e) => {
             const base64Photo = e.target.result;
             const croppedPhoto = base64Photo.substring(base64Photo.indexOf(',') + 1);
             setProfilePhoto(croppedPhoto);
+          };
+          await updateProfilePhoto(file);
+          reader.readAsDataURL(file);
         };
-        await updateProfilePhoto(file);
-        reader.readAsDataURL(file);
-    };
-
-    const updateProfilePhoto = async (file) => {
+        fileInput.click();
+      };
+      
+      const updateProfilePhoto = async (file) => {
         try {
-            const formData = new FormData();
-            formData.append('file', file);
-            const response = await axios.put(`/api/farmers/update-profile-photo/${id}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
+          const formData = new FormData();
+          formData.append('file', file);
+          const response = await axios.put(`/api/farmers/update-profile-photo/${id}`, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+            
+          });
+          setSuccessMessage('Profile updated successfully.');
         } catch (error) {
-            setError('An error occured while updating profile photo');
-            console.error(error);
+          setError('An error occurred while updating the profile photo');
+          console.error(error);
         }
-    }
+      };
+      
 
     const toggleStockStatus = (productId) => {
         setProducts((prevProducts) =>
@@ -82,16 +123,17 @@ function Profile() {
             })
         );
     };
-
     return (
         <>
             <UserNavbar />
             <Container fluid>
+            <div className={`success-message ${successMessage ? 'show' : ''}`}>{successMessage}</div>
                 <Row className="justify-content-center">
                     <Col sm={4} className="align-items-center justify-content-center">
                         <div className="profile-photo">
                             <Image id="profile-image" src={`data:image/jpg;base64,${profilePhoto}`} roundedCircle fluid style={{ width: '250px' }} />
                         </div>
+                        <Button variant="light" className="camera-button" type="file" accept="image/*" onClick={handlePhotoUpload}> <IoMdCamera size={30} /></Button>
                     </Col>
                     <Col sm={7} className="flex-column align-items-center">
                         <div className="profile-info">
@@ -187,10 +229,6 @@ function Profile() {
                                 <Form.Label>Email</Form.Label>
                                 <Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                             </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Profile Photo</Form.Label>
-                                <Form.Control type="file" accept="image/*" onChange={handlePhotoUpload} />
-                            </Form.Group>
                         </Form>
                     </Modal.Body>
                     <Modal.Footer>
@@ -206,5 +244,4 @@ function Profile() {
         </>
     );
 }
-
 export default Profile;
