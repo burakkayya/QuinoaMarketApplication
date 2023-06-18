@@ -12,8 +12,19 @@ import axios from './axiosConfig';
 
 function PopularSellers() {
     const [topSellers, setTopSellers] = useState([]);
+    const [errorMessage, setErrorMessage] = useState('');
     const email = sessionStorage.getItem('email');
     
+    useEffect(() => {
+        if (errorMessage) {
+            const timer = setTimeout(() => {
+                setErrorMessage('');
+            }, 2000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [errorMessage]);
+
     useEffect(() => {
         axios.get('/api/farmers/getTopFarmersWithMostProducts')
             .then(response => {
@@ -23,7 +34,7 @@ function PopularSellers() {
                 setTopSellers(sellers);
             })
             .catch(error => {
-                console.log(error);
+               setErrorMessage("An error occured while receiving popular sellers");
             });
     }, []);
 
@@ -31,6 +42,7 @@ function PopularSellers() {
         <>
             {email ? <UserNavbar /> : <CustomNavbar />}
             <Container className='header'>
+                <div className={`error-message ${errorMessage ? 'show' : ''}`}>{errorMessage}</div>
                 <Row className="justify-content-md-center">
                     <Col xs lg="6">
                         <h1 className="title-line" style={{ fontFamily: 'Poppins, sans-serif' }}>TOP SELLERS</h1>
