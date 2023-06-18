@@ -80,20 +80,3 @@ label.form-check-label {
 button.camera-button.btn.btn-light {
     margin-left: 100px;
 }
-.success-message {
-    position: fixed;
-    top: 20%;
-    right: 20px;
-    transform: translateY(-50%);
-    background-color: rgb(120, 212, 106);
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 4px;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-  }
-  
-  .success-message.show {
-    opacity: 1;
-  }
-  

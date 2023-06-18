@@ -11,3 +11,37 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.success-message {
+  position: fixed;
+  top: 20%;
+  right: 20px;
+  transform: translateY(-50%);
+  background-color: rgb(120, 212, 106);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.error-message {
+  position: fixed;
+  top: 20%;
+  right: 20px;
+  transform: translateY(-50%);
+  background-color: rgb(233, 29, 29);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.success-message.show {
+  opacity: 1;
+}
+
+.error-message.show {
+  opacity: 1;
+}

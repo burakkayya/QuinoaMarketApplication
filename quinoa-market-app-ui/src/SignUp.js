@@ -12,7 +12,8 @@ function SignUp() {
     const [phoneNo, setPhoneNo] = useState('');
     const [address, setAddress] = useState('');
     const [email, setEmail] = useState('');
-    const [error, setError] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
     const [agreeTerms, setAgreeTerms] = useState(false);
     const [photo, setPhoto] = useState('./images/profilephoto.jpg');
     const fileInputRef = useRef(null);
@@ -20,19 +21,40 @@ function SignUp() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        if (successMessage) {
+          const timer = setTimeout(() => {
+            setSuccessMessage('');
+            navigate('/');
+          }, 2000);
+      
+          return () => clearTimeout(timer);
+        }
+      }, [successMessage, navigate]);
+
+    useEffect(() => {
+        if (errorMessage) {
+            const timer = setTimeout(() => {
+                setErrorMessage('');
+            }, 2000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [errorMessage]);
+
+    useEffect(() => {
         fetch(photo)
-          .then((response) => response.blob())
-          .then((blob) => {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-              const base64Photo = reader.result;
-              setPhoto(base64Photo);
-            };
-            reader.readAsDataURL(blob);
-          })
-          .catch((error) => {
-            console.error('An error occurred while fetching the default photo:', error);
-          });
+            .then((response) => response.blob())
+            .then((blob) => {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    const base64Photo = reader.result;
+                    setPhoto(base64Photo);
+                };
+                reader.readAsDataURL(blob);
+            })
+            .catch((error) => {
+                console.error('An error occurred while fetching the default photo:', error);
+            });
     }, []);
 
     function handleClick(path) {
@@ -69,11 +91,11 @@ function SignUp() {
         try {
             const response = await axios.post('/api/sign-up', farmerData)
             if (response.status === 200) {
-                navigate('/');
+                setSuccessMessage('Successfully signed up. Navigating to login page...');
             }
         } catch (error) {
             console.log(error);
-            setError('An error occured while signing up!');
+            setErrorMessage('An error occured while signing up');
         }
     }
 
@@ -81,6 +103,8 @@ function SignUp() {
         <>
             <CustomNavbar />
             <Container>
+                <div className={`success-message ${successMessage ? 'show' : ''}`}>{successMessage}</div>
+                <div className={`error-message ${errorMessage ? 'show' : ''}`}>{errorMessage}</div>
                 <Row>
                     <Col xs={12} md={2}>
                         <img
@@ -150,7 +174,6 @@ function SignUp() {
                                             onClick={() => handleClick("/Home")}
                                         >Continue Without Member</Button>
                                     </div>
-                                    {error && <Alert variant="danger">{error}</Alert>}
                                 </Form>
                             </Col>
                         </Row>

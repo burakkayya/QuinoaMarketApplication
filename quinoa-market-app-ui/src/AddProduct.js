@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { BsFillArrowUpCircleFill } from 'react-icons/bs';
 import { Container, Row, Col, Image, Button, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap';
 import { IoIosAdd } from 'react-icons/io';
@@ -6,6 +6,7 @@ import UserNavbar from './UserNavbar';
 import './AddProduct.css';
 import quinoaDatas from './QuinoaData'
 import axios from "./axiosConfig";
+
 function AddProduct() {
     const [addImage, setAddImage] = useState('./images/addimage.png');
     const fileInputRef = useRef(null);
@@ -14,7 +15,29 @@ function AddProduct() {
     const [productPhoto, setProductPhoto] = useState(null);
     const [info, setInfo] = useState('');
     const farmerId = sessionStorage.getItem('id');
-    const [photo, setPhoto] = useState(null); 
+    const [photo, setPhoto] = useState(null);
+    const [successMessage, setSuccessMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
+    useEffect(() => {
+        if (successMessage) {
+            const timer = setTimeout(() => {
+                setSuccessMessage('');
+            }, 2000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [successMessage]);
+
+    useEffect(() => {
+        if (errorMessage) {
+            const timer = setTimeout(() => {
+                setErrorMessage('');
+            }, 2000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [errorMessage]);
 
     const Product = ({ name, description }) => {
         return (
@@ -44,7 +67,7 @@ function AddProduct() {
             setPredictedProduct(predictedProductName);
             setInfo(quinoaDatas[predictedProductName].description);
         } catch (error) {
-            console.error('Tahmin işlemi sırasında bir hata oluştu:', error);
+            setErrorMessage('An error occurred while predicting the image');
         }
     };
 
@@ -82,10 +105,9 @@ function AddProduct() {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            
-            console.log('Ürün eklendi:', response.data);
+            setSuccessMessage('Product added successfully');
         } catch (error) {
-            console.error('Ürün eklenirken bir hata oluştu:', error);
+            setErrorMessage('An error occurred while adding the product');
         }
     };
 
@@ -93,6 +115,8 @@ function AddProduct() {
         <>
             <UserNavbar />
             <Container fluid>
+                <div className={`success-message ${successMessage ? 'show' : ''}`}>{successMessage}</div>
+                <div className={`error-message ${errorMessage ? 'show' : ''}`}>{errorMessage}</div>
                 <Row className="justify-content-around mt-5">
                     <Col sm={12} md={6} className="d-flex flex-column align-items-center">
                         <div className="profile-info">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
 import './LoginPageStyle.css';
 import CustomNavbar from './CustomNavbar';
@@ -8,7 +8,17 @@ import axios from './axiosConfig';
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
+    useEffect(() => {
+        if (errorMessage) {
+            const timer = setTimeout(() => {
+                setErrorMessage('');
+            }, 2000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [errorMessage]);
 
     const navigate = useNavigate();
     function handleClick(path) {
@@ -29,13 +39,14 @@ const LoginPage = () => {
             }
         } catch (error) {
             console.log(error.getMessage);
-            setError('Invalid password or username!');
+            setErrorMessage('Invalid password or username');
         }
     }
 
     return (
         <>
             <CustomNavbar />
+            <div className={`error-message ${errorMessage ? 'show' : ''}`}>{errorMessage}</div>
             <div className='body'>
                 <div id='loginCollaps' className='d-flex justify-content-evenly '>
                     <div className="login-page">
@@ -53,8 +64,6 @@ const LoginPage = () => {
 
                                             <Form.Control type="password" placeholder="Password"
                                                 onChange={(event) => setPassword(event.target.value)} />
-
-                                            {error && <Alert variant="danger">{error}</Alert>}
 
                                             <Button variant="secondary" className="mr-4" type="submit">
                                                 Sign In

@@ -106,7 +106,7 @@ const UserNavbar = () => {
                         <Link
                             to="/Populars"
                             style={
-                                activeLink === '/Populars'
+                                activeLink === '/Populars' || activeLink.includes('/PopularSellerProfile')
                                     ? { ...linkStyle, ...activeLinkStyle }
                                     : linkStyle
                             }
@@ -120,9 +120,9 @@ const UserNavbar = () => {
                         <Link
                             to="/Profile"
                             style={
-                                activeLink === '/Profile'
-                                    ? { ...linkStyle, ...activeLinkStyle }
-                                    : linkStyle
+                                activeLink === '/Profile' || activeLink === '/AddProduct'
+                                  ? { ...linkStyle, ...activeLinkStyle }
+                                  : linkStyle
                             }
                             onMouseEnter={handleLinkHover}
                             onMouseLeave={handleLinkLeave}
