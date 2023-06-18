@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import LoginPage from './LoginPage';
-import CustomNavbar from './CustomNavbar';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from './HomePage';
-import PopularSellers from './PopularSellers';
-import Profile from './Profile';
-import About from './About';
-import AddProduct from './AddProduct';
-import SignUp from './SignUp';
-import PopularSellersProfile from './PopularSellersProfile';
+import LoginPage from './components/LoginPage';
+import HomePage from './components/HomePage';
+import PopularSellers from './components/PopularSellers';
+import Profile from './components/Profile';
+import About from './components/About';
+import AddProduct from './components/AddProduct';
+import SignUp from './components/SignUp';
+import PopularSellersProfile from './components/PopularSellersProfile';
 
 function App() {
   return (

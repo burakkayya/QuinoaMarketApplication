@@ -50,6 +50,10 @@ img.d-inline-block.align-top {
     font-family: emoji;
 }
 
+.signup-description{
+    margin-bottom: 25px;
+}
+
 h1.signup-header {
     font-weight: bold;
 }

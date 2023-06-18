@@ -1,9 +1,9 @@
 import React, { useState,useEffect } from 'react';
-import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
-import './LoginPageStyle.css';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import CustomNavbar from './CustomNavbar';
 import { useNavigate } from 'react-router-dom';
-import axios from './axiosConfig';
+import axios from '../config/axiosConfig';
+import '../styles/LoginPage.css';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');

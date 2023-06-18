@@ -66,8 +66,6 @@ const CustomNavbar = () => {
         }
     };
 
-    const isHomePage = activeLink === '/';
-
     return (
         <>
             <link
