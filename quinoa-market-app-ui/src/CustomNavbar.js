@@ -118,7 +118,7 @@ const CustomNavbar = () => {
                         <Link
                             to="/Populars"
                             style={
-                                activeLink === '/Populars'
+                                activeLink === '/Populars' || activeLink.includes('/PopularSellerProfile')
                                     ? { ...linkStyle, ...activeLinkStyle }
                                     : linkStyle
                             }

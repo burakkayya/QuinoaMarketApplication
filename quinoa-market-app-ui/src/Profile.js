@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import axios from './axiosConfig';
 import UserNavbar from './UserNavbar';
 import './Profile.css';
-import {IoMdCamera } from 'react-icons/io';
+import { IoMdCamera } from 'react-icons/io';
 
 function Profile() {
     const [showModal, setShowModal] = useState(false);
@@ -17,9 +17,9 @@ function Profile() {
     const [email, setEmail] = useState('');
     const [profilePhoto, setProfilePhoto] = useState('');
     const [products, setProducts] = useState([]);
-    const [error, setError] = useState('');
-    const uniquePredictionNames = [];
+    const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+    const uniquePredictionNames = [];
 
     useEffect(() => {
         setEmail(sessionStorage.getItem('email'));
@@ -35,83 +35,87 @@ function Profile() {
                 setProfilePhoto(profilePhoto);
                 setProducts(products);
             } catch (error) {
-                console.error(error);
+                setErrorMessage('An error occurred while receiving the information');
             }
         };
         fetchProfileData();
-            if (successMessage) {
-              const timer = setTimeout(() => {
+        if (successMessage) {
+            const timer = setTimeout(() => {
                 setSuccessMessage('');
-              }, 2000); 
-          
-              return () => clearTimeout(timer);
-            }
+            }, 2000);
+
+            return () => clearTimeout(timer);
+        }
     }, [successMessage]);
 
+    useEffect(() => {
+        if (errorMessage) {
+            const timer = setTimeout(() => {
+                setErrorMessage('');
+            }, 2000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [errorMessage]);
+
     const handleSave = async (event) => {
-         console.log(id)
-         try {
-          const updatedProfile = {
-            id: id,
-            name: name,
-            surname: surname,
-            address: address,
-            phoneNo: phone,
-            email: email,
-          };
-        console.log(updatedProfile)
-         const response = await axios.put('/api/farmers/update',updatedProfile);
-         console.log(response.data);
-    
-          setName(response.data.name);
-          setSurname(response.data.surname);
-          setAddress(response.data.address);
-          setPhone(response.data.phoneNo);
-          setEmail(response.data.email);
-          setProducts(response.data.products);
-          setSuccessMessage('Profile updated successfully.');
+        try {
+            const updatedProfile = {
+                id: id,
+                name: name,
+                surname: surname,
+                address: address,
+                phoneNo: phone,
+                email: email,
+            };
+            const response = await axios.put('/api/farmers/update', updatedProfile);
+            setName(response.data.name);
+            setSurname(response.data.surname);
+            setAddress(response.data.address);
+            setPhone(response.data.phoneNo);
+            setEmail(response.data.email);
+            setProducts(response.data.products);
+            setSuccessMessage('Profile updated successfully.');
         } catch (error) {
-          setError('An error occurred while updating the profile');
-          console.error(error);
+            setErrorMessage('An error occurred while updating the profile');
         }
         setShowModal(false);
     };
-    
+
     const handlePhotoUpload = async () => {
         const fileInput = document.createElement('input');
         fileInput.type = 'file';
         fileInput.accept = 'image/*';
         fileInput.onchange = async (event) => {
-          const file = event.target.files[0];
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            const base64Photo = e.target.result;
-            const croppedPhoto = base64Photo.substring(base64Photo.indexOf(',') + 1);
-            setProfilePhoto(croppedPhoto);
-          };
-          await updateProfilePhoto(file);
-          reader.readAsDataURL(file);
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const base64Photo = e.target.result;
+                const croppedPhoto = base64Photo.substring(base64Photo.indexOf(',') + 1);
+                setProfilePhoto(croppedPhoto);
+            };
+            await updateProfilePhoto(file);
+            reader.readAsDataURL(file);
         };
         fileInput.click();
-      };
-      
-      const updateProfilePhoto = async (file) => {
+    };
+
+    const updateProfilePhoto = async (file) => {
         try {
-          const formData = new FormData();
-          formData.append('file', file);
-          const response = await axios.put(`/api/farmers/update-profile-photo/${id}`, formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-            
-          });
-          setSuccessMessage('Profile updated successfully.');
+            const formData = new FormData();
+            formData.append('file', file);
+            const response = await axios.put(`/api/farmers/update-profile-photo/${id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+
+            });
+            setSuccessMessage('Profile updated successfully.');
         } catch (error) {
-          setError('An error occurred while updating the profile photo');
-          console.error(error);
+            setErrorMessage('An error occurred while updating the profile photo');
         }
-      };
-      
+    };
+
 
     const toggleStockStatus = (productId) => {
         setProducts((prevProducts) =>
@@ -127,7 +131,8 @@ function Profile() {
         <>
             <UserNavbar />
             <Container fluid>
-            <div className={`success-message ${successMessage ? 'show' : ''}`}>{successMessage}</div>
+                <div className={`success-message ${successMessage ? 'show' : ''}`}>{successMessage}</div>
+                <div className={`error-message ${errorMessage ? 'show' : ''}`}>{errorMessage}</div>
                 <Row className="justify-content-center">
                     <Col sm={4} className="align-items-center justify-content-center">
                         <div className="profile-photo">
@@ -208,7 +213,6 @@ function Profile() {
                     </Modal.Header>
                     <Modal.Body>
                         <Form>
-                            {error && <Alert variant="danger">{error}</Alert>}
                             <Form.Group>
                                 <Form.Label>Name</Form.Label>
                                 <Form.Control type="text" value={name} onChange={(e) => setName(e.target.value)} />
