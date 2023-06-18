@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Image, Button, Modal, Form, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Image, Button, Modal, Form } from 'react-bootstrap';
 import { IoMdCreate, IoIosAdd } from 'react-icons/io';
 import { Link } from 'react-router-dom';
-import axios from './axiosConfig';
+import axios from '../config/axiosConfig';
 import UserNavbar from './UserNavbar';
-import './Profile.css';
+import '../styles/Profile.css';
 import { IoMdCamera } from 'react-icons/io';
 
 function Profile() {

@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import axios from './axiosConfig';
+import axios from '../config/axiosConfig';
 import CustomNavbar from './CustomNavbar';
-import './SignUpStyle.css';
+import '../styles/SignUp.css';
 
 function SignUp() {
     const [name, setName] = useState('');

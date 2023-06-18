@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import CustomNavbar from "./CustomNavbar";
 import Card from 'react-bootstrap/Card';
-import './HomePage.css';
-import axios from "./axiosConfig";
+import '../styles/HomePage.css';
+import axios from "../config/axiosConfig";
 import UserNavbar from "./UserNavbar";
 
 function HomePage() {

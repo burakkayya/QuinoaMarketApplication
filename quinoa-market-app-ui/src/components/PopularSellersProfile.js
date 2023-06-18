@@ -3,8 +3,8 @@ import { Container, Row, Col, Image, Form } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import CustomNavbar from './CustomNavbar';
 import UserNavbar from './UserNavbar';
-import axios from './axiosConfig';
-import './Profile.css';
+import axios from '../config/axiosConfig';
+import '../styles/Profile.css';
 
 function PopularSellersProfile() {
     const { id } = useParams();

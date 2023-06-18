@@ -3,9 +3,9 @@ import { BsFillArrowUpCircleFill } from 'react-icons/bs';
 import { Container, Row, Col, Image, Button, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap';
 import { IoIosAdd } from 'react-icons/io';
 import UserNavbar from './UserNavbar';
-import './AddProduct.css';
-import quinoaDatas from './QuinoaData'
-import axios from "./axiosConfig";
+import quinoaDatas from '../utils/QuinoaData'
+import axios from "../config/axiosConfig";
+import '../styles/AddProduct.css';
 
 function AddProduct() {
     const [addImage, setAddImage] = useState('./images/addimage.png');

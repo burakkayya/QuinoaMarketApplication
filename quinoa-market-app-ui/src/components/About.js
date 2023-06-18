@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { BsFillPersonCheckFill, BsPencilFill, BsFileImageFill, BsUiChecks, BsFillPeopleFill } from 'react-icons/bs';
 import CustomNavbar from './CustomNavbar';
-import './About.css';
+import '../styles/About.css';
 
 function About() {
-    const [profilePhoto, setProfilePhoto] = useState('./images/ProfilePhoto2.png');
-
     return (
         <>
             <CustomNavbar />

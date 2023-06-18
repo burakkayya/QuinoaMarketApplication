@@ -7,8 +7,8 @@ import Col from 'react-bootstrap/Col';
 import { IoIosArrowForward } from 'react-icons/io';
 import CustomNavbar from './CustomNavbar';
 import UserNavbar from './UserNavbar';
-import './PopularSellers.css';
-import axios from './axiosConfig';
+import '../styles/PopularSellers.css';
+import axios from '../config/axiosConfig';
 
 function PopularSellers() {
     const [topSellers, setTopSellers] = useState([]);
