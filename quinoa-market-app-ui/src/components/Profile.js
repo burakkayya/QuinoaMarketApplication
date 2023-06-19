@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Image, Button, Modal, Form } from 'react-bootstrap';
-import { IoMdCreate, IoIosAdd } from 'react-icons/io';
+import { IoMdCreate, IoIosAdd, IoMdColorFill } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import axios from '../config/axiosConfig';
 import UserNavbar from './UserNavbar';
@@ -19,6 +19,7 @@ function Profile() {
     const [products, setProducts] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+
     const uniquePredictionNames = [];
 
     useEffect(() => {
@@ -134,14 +135,17 @@ function Profile() {
                 <div className={`success-message ${successMessage ? 'show' : ''}`}>{successMessage}</div>
                 <div className={`error-message ${errorMessage ? 'show' : ''}`}>{errorMessage}</div>
                 <Row className="justify-content-center">
-                    <Col sm={4} className="align-items-center justify-content-center">
-                        <div className="profile-photo">
-                            <Image id="profile-image" src={`data:image/jpg;base64,${profilePhoto}`} roundedCircle fluid style={{ width: '250px' }} />
-                        </div>
-                        <Button variant="light" className="camera-button" type="file" accept="image/*" onClick={handlePhotoUpload}> <IoMdCamera size={30} /></Button>
+                    <Col sm={4} xs={6} className="align-items-center justify-content-center">
+                    <div className="profile-photo d-flex align-items-center justify-content-center">
+                    {profilePhoto ? (
+                        <Image id="profile-image" src={`data:image/jpg;base64,${profilePhoto}`} roundedCircle fluid style={{ width: '250px' }} />)
+                         : (<Image id="profile-image" src={'./images/profileavatar.jpg'} fluid style={{ width: '250px' }} />)}
+                    </div>
+
+                        <Button variant="light" className="camera-button mx-auto" type="file" accept="image/*" onClick={handlePhotoUpload}> <IoMdCamera size={30} /></Button>
                     </Col>
-                    <Col sm={7} className="flex-column align-items-center">
-                        <div className="profile-info">
+                    <Col sm={7} xs={6} className="flex-column align-items-center">
+                        <div className="profile-info flex mx-auto">
                             <Row className="profile-header d-flex align-items-center">
                                 <Col className="pl-0">
                                     <h3 style={{ marginTop: '10px' }}>Account</h3>
@@ -196,8 +200,7 @@ function Profile() {
                                 })}
                             </Row>
                             <Link to="/AddProduct">
-                                <Button
-                                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                                <Button className='add-product'
                                 >
                                     Add Product
                                     <IoIosAdd size={30} style={{ marginLeft: '8px' }} />
@@ -235,13 +238,18 @@ function Profile() {
                             </Form.Group>
                         </Form>
                     </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={() => setShowModal(false)}>
+                    <Modal.Footer className="d-flex justify-content-center">
+                        <div> 
+                            <Button variant="secondary" onClick={() => setShowModal(false)}>
                             Cancel
-                        </Button>
-                        <Button variant="primary" onClick={handleSave}>
+                            </Button></div>
+                        <div>    
+                            <Button variant="primary" onClick={handleSave}>
                             Save
-                        </Button>
+                            </Button>
+                        </div>
+                       
+                    
                     </Modal.Footer>
                 </Modal>
             </Container >

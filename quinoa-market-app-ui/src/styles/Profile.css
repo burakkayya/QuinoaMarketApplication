@@ -80,3 +80,15 @@ label.form-check-label {
 button.camera-button.btn.btn-light {
     margin-left: 100px;
 }
+.add-product{
+    border-color: wheat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #E49F15;
+
+}
+.add-product:hover{
+    color: white;
+    background-color: #724F0A;
+}

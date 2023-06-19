@@ -77,7 +77,7 @@ const LoginPage = () => {
                                                 <span className="divider-text">OR</span>
                                                 <span className="divider-line"></span>
                                             </div>
-                                            <Button variant="secondary" id="continueButton"
+                                            <Button id="continueButton"
                                                 onClick={() => handleClick("Home")}
                                             >Continue Without Member</Button>
                                         </Form>

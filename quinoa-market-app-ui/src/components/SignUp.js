@@ -15,7 +15,7 @@ function SignUp() {
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [agreeTerms, setAgreeTerms] = useState(false);
-    const [photo, setPhoto] = useState('./images/profilephoto.jpg');
+    const [photo, setPhoto] = useState('./images/profileavatar.jpg');
     const fileInputRef = useRef(null);
 
     const navigate = useNavigate();
