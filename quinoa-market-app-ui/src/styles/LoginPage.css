@@ -112,11 +112,7 @@
  margin-top: 5px;
 }
 
-
-
-
 @media screen and (max-width: 1200px)  {
-
     .login-page {
         border-radius: 0;
         height: 100vh;
@@ -145,13 +141,6 @@
     {
        display: none;
     }
-
-    
-}
-#continueButton {
-    border: none;
-    color:whitesmoke;
-    width: 70%;
 }
 
     #continueButton:hover {

@@ -117,18 +117,20 @@ function AddProduct() {
             <Container fluid>
                 <div className={`success-message ${successMessage ? 'show' : ''}`}>{successMessage}</div>
                 <div className={`error-message ${errorMessage ? 'show' : ''}`}>{errorMessage}</div>
-                <Row className="justify-content-around mt-5">
-                    <Col sm={12} md={6} className="d-flex flex-column align-items-center">
+                <Row className="justify-content-center mt-5">
+                    <Col sm={6} md={6} xs={6} className="d-flex flex-column align-items-center">
                         <div className="profile-info">
                             <Row className="profile-header ">
                                 <Col className="pl-0">
-                                    {predictedProduct && (
-                                        <h2>{quinoaDatas[predictedProduct].name}</h2>)}
+                                    {predictedProduct ? predictedProduct && (
+                                        <h2>{quinoaDatas[predictedProduct].name}</h2>): <h2>Quinoa Type Head</h2>
+                                    }
                                 </Col>
                             </Row>
                             <h5 className="mt-4 mb-3">Description</h5>
-                            {predictedProduct && (
-                                <p className="fw-normal">{quinoaDatas[predictedProduct].description}</p>)}
+                            {predictedProduct?predictedProduct && (
+                                <p className="fw-normal">{quinoaDatas[predictedProduct].description}</p>):                            <p> Select and upload the photo of your products. The artificial intelligence model determines which type the product belongs to and fills in the necessary information. </p>
+                            }
                             <InputGroup>
                                 <DropdownButton
                                     className="stockButton"
@@ -145,12 +147,11 @@ function AddProduct() {
                             </InputGroup>
                         </div>
                     </Col>
-                    <Col sm={12} md={6} className="d-flex flex-column align-items-center justify-content-center">
-                        <div className="d-flex flex-column align-items-center justify-content-center">
+                    <Col sm={6} md={6} xs={6} className="d-flex flex-column align-items-center justify-content-center">
+                        <div className="nter">
                             <Image src={addImage} fluid style={{ maxWidth: '100%', width: '300px' }} />
-
                         </div>
-                        <div className="d-flex  align-items-center justify-content-center">
+                        <div className="">
                             <Button id='select-image-button' variant="primary" onClick={handleButtonClick} className="mt-3">
                                 <div>
                                     Select Image
@@ -167,8 +168,6 @@ function AddProduct() {
                             onChange={handleImageUpload}
                         />
                     </Col>
-
-
                 </Row>
                 <Row xs={6} md={6} className="d-flex flex-column align-items-center justify-content-center">
                     <div className='d-flex align-items-center justify-content-center'>
