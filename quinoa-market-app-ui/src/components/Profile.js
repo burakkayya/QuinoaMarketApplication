@@ -118,15 +118,26 @@ function Profile() {
     };
 
 
-    const toggleStockStatus = (productId) => {
-        setProducts((prevProducts) =>
-            prevProducts.map((product) => {
-                if (product.id === productId) {
-                    return { ...product, stockStatus: !product.stockStatus };
-                }
-                return product;
-            })
-        );
+        const toggleStockStatus = async (product) => {
+            try {
+                const response = await axios.put('/api/products/update', {
+                    id: product.id,
+                    farmerId: product.farmerId,
+                    productPhoto:product.productPhoto,
+                    info:product.info,
+                    stockStatus:!product.stockStatus,
+                    predictionName:product.predictionName
+                });
+                setProducts((prevProducts) =>
+                prevProducts.map((Product) => {
+                 return { ...Product, stockStatus: !product.stockStatus };
+                })
+            );
+            } catch (error) {
+                console.log(error.getMessage);
+                setErrorMessage('Error occured while updating product stock');
+            }
+      
     };
     return (
         <>
@@ -189,7 +200,7 @@ function Profile() {
                                                         id={`product-${product.id}`}
                                                         label={product.predictionName}
                                                         checked={product.stockStatus}
-                                                        onChange={() => toggleStockStatus(product.id)}
+                                                        onChange={() => toggleStockStatus(product)}
                                                         custom
                                                         inline
                                                     />
