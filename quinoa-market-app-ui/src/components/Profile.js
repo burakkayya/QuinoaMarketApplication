@@ -133,6 +133,7 @@ function Profile() {
                  return { ...Product, stockStatus: !product.stockStatus };
                 })
             );
+            setSuccessMessage('Stock status updated successfully.');
             } catch (error) {
                 console.log(error.getMessage);
                 setErrorMessage('Error occured while updating product stock');

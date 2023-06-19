@@ -99,16 +99,35 @@ function AddProduct() {
                 farmerId: farmerId,
                 info: info,
             };
+            
             formData.append('product', JSON.stringify(productData));
-            const response = await axios.post('/api/products/add', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-            setSuccessMessage('Product added successfully');
+            
+            const farmerResponse = await axios.get(`/api/farmers/${farmerId}`);
+            const products = farmerResponse.data.products;
+        
+            let hasMatchingProduct = false;
+            for (let i = 0; i < products.length; i++) {
+                if (products[i].predictionName === predictedProduct) {
+                    hasMatchingProduct = true;
+                    setErrorMessage("Can not add same product")
+                    break;
+                }
+            }
+            
+            if (!hasMatchingProduct) {
+                const response = await axios.post('/api/products/add', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+                setSuccessMessage('Product added successfully');
+            } else {
+                // Handle case where matching product already exists
+                // Do something
+            }
         } catch (error) {
             setErrorMessage('An error occurred while adding the product');
-        }
+        }        
     };
 
     return (
