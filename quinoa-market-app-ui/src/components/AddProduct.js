@@ -81,8 +81,9 @@ function AddProduct() {
             setProductPhoto(new Blob([byteArray], { type: file.type }));
             handlePrediction(file);
         };
-        reader.readAsDataURL(file);
-        setPhoto(file);
+        if(file)
+        {reader.readAsDataURL(file);
+        setPhoto(file);}
     };
 
     const handleButtonClick = () => {
