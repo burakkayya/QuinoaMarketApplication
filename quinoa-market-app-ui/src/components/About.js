@@ -2,12 +2,14 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { BsFillPersonCheckFill, BsPencilFill, BsFileImageFill, BsUiChecks, BsFillPeopleFill } from 'react-icons/bs';
 import CustomNavbar from './CustomNavbar';
+import UserNavbar from './UserNavbar';
 import '../styles/About.css';
 
 function About() {
+    const email = sessionStorage.getItem('email');
     return (
         <>
-            <CustomNavbar />
+             {email ? <UserNavbar /> : <CustomNavbar />}
             <Container fluid className="mt-5">
                 <Row className='justify-content-center items-center '>
                     <Col sm={5} className='text-center'>
