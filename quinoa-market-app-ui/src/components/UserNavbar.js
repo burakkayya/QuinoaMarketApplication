@@ -132,6 +132,20 @@ const UserNavbar = () => {
                             Profile
                         </Link>
                         <Link
+                            to="/About"
+                            style={
+                                activeLink === '/About'
+                                    ? { ...linkStyle, ...activeLinkStyle }
+                                    : linkStyle
+                            }
+                            onMouseEnter={handleLinkHover}
+                            onMouseLeave={handleLinkLeave}
+                            onClick={() => handleLinkClick('/About')}
+                            data-isactive={activeLink === '/About'}
+                        >
+                            About
+                        </Link>
+                        <Link
                             to="/"
                             style={
                                 activeLink === '/'
